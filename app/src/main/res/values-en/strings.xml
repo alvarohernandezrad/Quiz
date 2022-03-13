@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Quiz</string>
+    <string name="multijugador">Multiplayer</string>
+    <string name="preferencias">Preferences</string>
+    <string name="nombre">Nickname</string>
+    <string name="jugar">Play</string>
+    <string name="añadir">Add player</string>
+    <string name="textoAñadir">Add 2-6 players</string>
+    <string name="campoVacio">This field is empty</string>
+    <string name="nombreYaExiste">This player name already exists</string>
+    <string name="faltanJugadores">You have to add more players</string>
+    <string name="noMasJugadores">The list of players is complete</string>
+    <string name="jugadorAñadido">New player added:</string>
+    <string name="listaJugadores">List of players</string>
+    <string name="eliminarJugador">Hold to remove player</string>
+    <string name="estasSeguro">Are you sure you want to continue with these players?</string>
+    <string name="eliminar">Remove</string>
+</resources>

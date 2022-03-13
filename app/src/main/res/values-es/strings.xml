@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Quiz</string>
+    <string name="app_name">Quiz</string>
     <string name="multijugador">Multijugador</string>
     <string name="preferencias">Preferencias</string>
     <string name="nombre">Nombre del jugador</string>
