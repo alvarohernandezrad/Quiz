@@ -9,6 +9,8 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.quiz.models.Turno;
+
 import java.util.ArrayList;
 
 public class MiDB extends SQLiteOpenHelper {
@@ -18,20 +20,8 @@ public class MiDB extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("create table players('name' varchar(255) primary key not null )");
-
-
-        /*sqLiteDatabase.execSQL("create table users('id' integer primary key autoincrement not null, 'username' varchar(255) not null, 'email' varchar(255) not null, 'password' varchar(255) not null)");
-        sqLiteDatabase.execSQL("create table restaurants('id' integer primary key autoincrement not null, 'name' varchar(255) not null, 'image_path' varchar(255) not null, 'city' varchar(255) not null)");
-        sqLiteDatabase.execSQL("create table food('id' integer primary key autoincrement not null, 'name' varchar(255) not null, 'image_path' varchar(255) not null, 'price' real not null)");
-        sqLiteDatabase.execSQL("create table restfood('id' integer primary key autoincrement not null, 'rest_id' integer not null, 'food_id' integer not null, foreign key(\"rest_id\") references restaurants(id), foreign key(\"food_id\") references food(id))");
-        sqLiteDatabase.execSQL("create table orders('id' integer not null, 'user_id' integer not null, 'rest_id' integer not null, 'food_id' integer not null, 'price' real not null, foreign key(rest_id) references restaurants(id), foreign key(food_id) references food(id), foreign key(user_id) references users(id), primary key(id, rest_id, food_id, user_id))");
-        sqLiteDatabase.execSQL("insert into restaurants(\"name\", \"image_path\", \"city\") values(\"Tagliatella\", \"tagliatella\", \"bilbao\")");
-        sqLiteDatabase.execSQL("insert into restaurants(\"name\", \"image_path\", \"city\") values(\"Burger King\", \"burger\", \"bilbao\")");
-        sqLiteDatabase.execSQL("insert into restaurants(\"name\", \"image_path\", \"city\") values(\"Tagliatella\", \"tagliatella\", \"barcelona\")");
-        sqLiteDatabase.execSQL("insert into restaurants(\"name\", \"image_path\", \"city\") values(\"Burger King\", \"burger\", \"madrid\")");
-        sqLiteDatabase.execSQL("insert into restaurants(\"name\", \"image_path\", \"city\") values(\"Tagliatella\", \"tagliatella\", \"madrid\")");
-        sqLiteDatabase.execSQL("insert into restaurants(\"name\", \"image_path\", \"city\") values(\"Burger King\", \"burger\", \"sevilla\")");
-        sqLiteDatabase.execSQL("insert into restaurants(\"name\", \"image_path\", \"city\") values(\"Tagliatella\", \"tagliatella\", \"sevilla\")");*/
+        sqLiteDatabase.execSQL("create table preguntas('id' int primary key not null, 'hecha' int not null, 'pregunta' text not null, 'respuesta1' varchar(255) not null, 'respuesta2' varchar(255) not null, 'respuesta3' varchar(255) not null, 'respuesta4' varchar(255) not null, 'tipo' varchar(255) not null, 'correcta' int not null)");
+        sqLiteDatabase.execSQL("insert into preguntas values (1, 0, '¿Quien es mejor?','Messi', 'Ronaldo', 'Aduriz', 'Mbappe', 'Deportes',3)");
 
     }
 
@@ -46,6 +36,7 @@ public class MiDB extends SQLiteOpenHelper {
         while(cursor.moveToNext()){
             list.add(cursor.getString(0));
         }
+        cursor.close();
         return list;
     }
 
@@ -58,6 +49,7 @@ public class MiDB extends SQLiteOpenHelper {
     public void insertarJugador(String nickname){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("insert into players values('"+ nickname+"')");
+        db.close();
     }
 
     public int numeroJugadores(){
@@ -68,11 +60,32 @@ public class MiDB extends SQLiteOpenHelper {
     public void limpiarTablaJugadores(){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("delete from players where 1");
+        db.close();
     }
 
     public void eliminarJugador(String name){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("delete from players where name='" + name + "'");
+        db.close();
     }
+
+    public Turno recibirPregunta(){
+        SQLiteDatabase db = getWritableDatabase();
+
+        Cursor cursor = db.rawQuery("select id, pregunta, respuesta1, respuesta2, respuesta3, respuesta4, tipo, correcta from preguntas where hecha < 1", null);
+        cursor.moveToFirst();
+        String pregunta = cursor.getString(1);
+        ArrayList<String> respuestas = new ArrayList<String>();
+        for (int i = 2; i <= 5; i++) {
+            respuestas.add(cursor.getString(i));
+        }
+        int id = cursor.getInt(0);
+        String tipo = cursor.getString(6);
+        int correcta = cursor.getInt(7);
+        Turno turno = new Turno(pregunta, respuestas, tipo, correcta);
+        return turno;
+    }
+
+
 
 }

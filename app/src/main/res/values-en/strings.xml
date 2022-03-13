@@ -16,4 +16,6 @@
     <string name="eliminarJugador">Hold to remove player</string>
     <string name="estasSeguro">Are you sure you want to continue with these players?</string>
     <string name="eliminar">Remove</string>
+    <string name="acierto">You got it right!!</string>
+    <string name="fallo">You have not hit</string>
 </resources>

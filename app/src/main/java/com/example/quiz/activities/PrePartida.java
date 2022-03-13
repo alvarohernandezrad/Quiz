@@ -61,7 +61,8 @@ public class PrePartida extends AppCompatActivity implements AceptarJugadoresDia
 
     @Override
     public void clickarSiDialog() {
-//Abrir intent jugar
+        Intent intentJugar = new Intent(this, Partida.class);
+        startActivity(intentJugar);
     }
 
     @Override

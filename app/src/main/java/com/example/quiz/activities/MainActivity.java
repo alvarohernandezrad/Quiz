@@ -13,6 +13,7 @@ import com.example.quiz.R;
 import com.example.quiz.database.MiDB;
 
 public class MainActivity extends AppCompatActivity {
+
     MiDB database = new MiDB(this, "App", (SQLiteDatabase.CursorFactory) null, 1);
 
     @Override

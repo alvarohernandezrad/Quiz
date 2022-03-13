@@ -58,15 +58,8 @@ public class AddPlayers extends AppCompatActivity implements PlayerListFragment.
                 nombre.setText("");
             }
         });
-
-        //this.database.limpiarTablaJugadores();
     }
 
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        actualizarDatos();
-    }*/
 
     // Métodos sobreescritos del listener del fragment
     public String[] cargarElementos() {

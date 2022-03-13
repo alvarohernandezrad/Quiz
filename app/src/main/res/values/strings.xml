@@ -15,4 +15,6 @@
     <string name="eliminarJugador">Mantén para eliminar jugador</string>
     <string name="estasSeguro">¿Estás seguro de que quieres continuar con estos jugadores?</string>
     <string name="eliminar">Eliminar</string>
+    <string name="acierto">¡¡Has acertado!!</string>
+    <string name="fallo">Has fallado</string>
 </resources>
