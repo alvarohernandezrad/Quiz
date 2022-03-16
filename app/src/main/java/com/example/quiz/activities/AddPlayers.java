@@ -102,7 +102,9 @@ public class AddPlayers extends AppCompatActivity implements PlayerListFragment.
         }
         // Añadir un jugador nuevo
         else{
-            this.database.insertarJugador(nickname);
+            // Se añadirá como id del nuevo jugador el siguiente número al id del último jugador.
+            int id = this.database.idUltimoJugador()+1;
+            this.database.insertarJugador(id, nickname);
             Toast.makeText(this, "Nuevo jugador añadido: "+nickname, Toast.LENGTH_SHORT).show();
             int orientation = getResources().getConfiguration().orientation;
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {

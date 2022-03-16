@@ -18,4 +18,5 @@
     <string name="eliminar">Remove</string>
     <string name="acierto">You got it right!!</string>
     <string name="fallo">You have not hit</string>
+    <string name="turno">Turn for:</string>
 </resources>

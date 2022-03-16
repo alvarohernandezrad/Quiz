@@ -61,6 +61,14 @@ public class PrePartida extends AppCompatActivity implements AceptarJugadoresDia
 
     @Override
     public void clickarSiDialog() {
+        // Queremos tener los ids ordenados del 0 al 5. Sin embargo, en el proceso de añadir y borrar los IDs, hemos tenido que
+        // meter números de forma desordenada, dejándo así los número de ID mal, por ejemplo, para 6 jugadores {0, 2, 3, 5, 6, 7},
+        // cuando en realidad queremos tener la secuencia {0, 1, 2, 3, 4, 5}.
+        // Para eso existe el método reordenar Ids. Ahora quedará así ->
+        // El id de los jugadores empezará en 0. Si no hay jugadores añadidos anteriormente el primer jugador tendrá
+        // el id = 0 -> número de jugadores hasta ahora (0). Para los demás, +1 del anterior. Así, aunque se borre los
+        // ID-s irán del 0 al 5 aunque en el proceso se borren jugadores
+        this.database.reordenarIds();
         Intent intentJugar = new Intent(this, Partida.class);
         startActivity(intentJugar);
     }

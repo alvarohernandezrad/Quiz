@@ -3,10 +3,23 @@ package com.example.quiz.models;
 import java.util.ArrayList;
 
 public class Turno {
+    private int id;
     private String pregunta;
     private ArrayList<String> respuestas = new ArrayList<String>();
     private String tipo;
     private int correcta;
+
+    public Turno(int id, String pregunta, ArrayList<String> respuestas, String tipo, int correcta){
+        this.id = id;
+        this.pregunta = pregunta;
+        this.respuestas = respuestas;
+        this.tipo = tipo;
+        this.correcta = correcta;
+    }
+
+    private int getId() { return id; }
+
+    private void setId(int id) { this.id = id; }
 
     public String getPregunta() {
         return pregunta;
@@ -39,13 +52,5 @@ public class Turno {
     public void setCorrecta(int correcta) {
         this.correcta = correcta;
     }
-
-    public Turno(String pregunta, ArrayList<String> respuestas, String tipo, int correcta){
-        this.pregunta = pregunta;
-        this.respuestas = respuestas;
-        this.tipo = tipo;
-        this.correcta = correcta;
-    }
-
 
 }
