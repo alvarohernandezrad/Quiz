@@ -31,6 +31,7 @@ public class MiDB extends SQLiteOpenHelper {
 
     }
 
+    // Obtener los nombres de los jugadores logrando un ArrayList
     public ArrayList<String> getNombresJugadores(){
         ArrayList<String> list = new ArrayList<>();
         Cursor cursor = getReadableDatabase().rawQuery("SELECT nombre FROM jugadores", (String[]) null);
@@ -39,6 +40,32 @@ public class MiDB extends SQLiteOpenHelper {
         }
         cursor.close();
         return list;
+    }
+
+    // Obtener los nombres de los jugadores en un Array y por orden de id
+    public String[] obtenerNombresJugadores(){
+        String[] nombres = new String[this.numeroJugadores()];
+        int i = 0;
+        Cursor cursor = getReadableDatabase().rawQuery("SELECT nombre FROM jugadores ORDER BY id", (String[]) null);
+        while(cursor.moveToNext()){
+            nombres[i] = cursor.getString(0);
+            i++;
+        }
+        cursor.close();
+        return nombres;
+    }
+
+    // Obtener las puntuaciones actuales de los jugadores y por orden de id
+    public int[] obtenerPuntuacionesJugadores(){
+        int[] puntuaciones = new int[this.numeroJugadores()];
+        int i = 0;
+        Cursor cursor = getReadableDatabase().rawQuery("SELECT puntos FROM jugadores ORDER BY id", (String[]) null);
+        while(cursor.moveToNext()){
+            puntuaciones[i] = cursor.getInt(0);
+            i++;
+        }
+        cursor.close();
+        return puntuaciones;
     }
 
     public boolean existeJugador(String nickname){
@@ -165,6 +192,8 @@ public class MiDB extends SQLiteOpenHelper {
             int idCambiar = listaIds.get(i);
             db.execSQL("UPDATE jugadores SET id = "+i+" WHERE id = "+idCambiar+"");
         }
+        cursor.close();
+        db.close();
     }
 
 }

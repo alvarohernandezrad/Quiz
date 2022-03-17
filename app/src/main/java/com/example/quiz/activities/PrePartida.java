@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quiz.R;
-import com.example.quiz.adaptors.AdaptorListView;
+import com.example.quiz.adaptors.AdaptorListViewBotonEliminar;
 import com.example.quiz.database.MiDB;
 import com.example.quiz.dialogs.AceptarJugadoresDialog;
 
@@ -41,7 +41,7 @@ public class PrePartida extends AppCompatActivity implements AceptarJugadoresDia
 
         String[] nombres = obtenerJugadores();
         jugadores = (ListView)findViewById(R.id.lista);
-        AdaptorListView adaptor = new AdaptorListView(getApplicationContext(), nombres);
+        AdaptorListViewBotonEliminar adaptor = new AdaptorListViewBotonEliminar(getApplicationContext(), nombres);
         jugadores.setAdapter(adaptor);
 
         jugadores.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -53,7 +53,7 @@ public class PrePartida extends AppCompatActivity implements AceptarJugadoresDia
                 // Datos actualizados
                 adaptor.notifyDataSetChanged();
                 String[] nombres = obtenerJugadores();
-                AdaptorListView adaptor = new AdaptorListView(getApplicationContext(), nombres);
+                AdaptorListViewBotonEliminar adaptor = new AdaptorListViewBotonEliminar(getApplicationContext(), nombres);
                 jugadores.setAdapter(adaptor);
             }
         });

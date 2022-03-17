@@ -7,29 +7,29 @@
 
     <ImageView
         android:id="@+id/imagenPartida"
-        android:layout_width="136dp"
-        android:layout_height="110dp"
+        android:layout_width="109dp"
+        android:layout_height="85dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/turnoPartida"
-        app:layout_constraintVertical_bias="0.144"
+        app:layout_constraintVertical_bias="0.045"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/turnoPartida"
-        android:layout_width="222dp"
-        android:layout_height="56dp"
-        android:text="TextView"
+        android:layout_width="293dp"
+        android:layout_height="61dp"
         android:gravity="center"
+        android:text="TextView"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.072"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.045" />
+        app:layout_constraintVertical_bias="0.011" />
 
     <ListView
         android:id="@+id/respuestasPartida"
@@ -51,4 +51,39 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/turnoPartida"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/listaJugadoresPuntosPartida"
+        android:layout_width="350dp"
+        android:layout_height="124dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/respuestasPartida"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagenPartida"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/cabeceraJugador"
+        android:layout_width="176dp"
+        android:layout_height="31dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/listaJugadoresPuntosPartida"
+        app:layout_constraintEnd_toStartOf="@+id/respuestasPartida"
+        app:layout_constraintHorizontal_bias="0.089"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagenPartida"
+        app:layout_constraintVertical_bias="0.466" />
+
+    <TextView
+        android:id="@+id/cabeceraPuntos"
+        android:layout_width="79dp"
+        android:layout_height="30dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/listaJugadoresPuntosPartida"
+        app:layout_constraintEnd_toStartOf="@+id/respuestasPartida"
+        app:layout_constraintHorizontal_bias="0.638"
+        app:layout_constraintStart_toEndOf="@+id/cabeceraJugador"
+        app:layout_constraintTop_toBottomOf="@+id/imagenPartida"
+        app:layout_constraintVertical_bias="0.463" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,4 +19,6 @@
     <string name="acierto">¡¡Has acertado!!</string>
     <string name="fallo">Has fallado</string>
     <string name="turno">Turno de:</string>
+    <string name="cabeceraJugador">Jugador:</string>
+    <string name="cabeceraPuntos">Puntos:</string>
 </resources>

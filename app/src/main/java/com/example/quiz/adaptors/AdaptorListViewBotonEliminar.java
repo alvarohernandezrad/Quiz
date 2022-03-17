@@ -15,12 +15,12 @@ import com.example.quiz.R;
 import com.example.quiz.activities.PrePartida;
 import com.example.quiz.database.MiDB;
 
-public class AdaptorListView extends BaseAdapter {
+public class AdaptorListViewBotonEliminar extends BaseAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
     private String[] nombres;
 
-    public AdaptorListView(Context pcontext, String[] pnombres){
+    public AdaptorListViewBotonEliminar(Context pcontext, String[] pnombres){
         context = pcontext;
         nombres = pnombres;
         layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

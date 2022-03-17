@@ -3,6 +3,7 @@ package com.example.quiz.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quiz.R;
+import com.example.quiz.adaptors.AdaptorListViewJugadorPuntos;
 import com.example.quiz.database.MiDB;
 import com.example.quiz.models.Turno;
 
@@ -27,6 +29,9 @@ public class Partida extends AppCompatActivity {
     private TextView pregunta;
     private ListView respuestas;
     private TextView textoTurno;
+    private ListView jugadoresPuntos; // Solo en modo horizontal
+    private TextView cabeceraJugador; // Solo en modo horizontal
+    private TextView cabeceraPuntos; // Solo en modo horizontal
 
     private Turno turno;
     private static int numeroJugadores;
@@ -80,8 +85,25 @@ public class Partida extends AppCompatActivity {
         // Convertir ArrayList con las respuestas en Array para el adaptador
         String[] arrayRespuestas = new String[turno.getRespuestas().size()];
         arrayRespuestas = turno.getRespuestas().toArray(arrayRespuestas);
-        ArrayAdapter elAdaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayRespuestas);
-        this.respuestas.setAdapter(elAdaptador);
+        ArrayAdapter adaptadorPreguntas = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayRespuestas);
+        this.respuestas.setAdapter(adaptadorPreguntas);
+
+        //Si estamos en orientación horizontal, añadimos lo necesario para añadir la ListView personalizada Jugador-Puntos
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            this.jugadoresPuntos = findViewById(R.id.listaJugadoresPuntosPartida);
+            // Conseguimos array con nombres y puntuaciones, en el mismo orden
+            String[] jugadores = this.database.obtenerNombresJugadores();
+            int[] puntuaciones = this.database.obtenerPuntuacionesJugadores();
+            AdaptorListViewJugadorPuntos adaptadorJugadorPuntos = new AdaptorListViewJugadorPuntos(getApplicationContext(), jugadores, puntuaciones);
+            this.jugadoresPuntos.setAdapter(adaptadorJugadorPuntos);
+
+            this.cabeceraJugador = findViewById(R.id.cabeceraJugador);
+            this.cabeceraPuntos = findViewById(R.id.cabeceraPuntos);
+
+            this.cabeceraJugador.setText(R.string.cabeceraJugador);
+            this.cabeceraPuntos.setText(R.string.cabeceraPuntos);
+        }
 
         respuestas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
            @Override

@@ -74,8 +74,8 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/listFragment"
         android:name="com.example.quiz.fragments.PlayerListFragment"
-        android:layout_width="167dp"
-        android:layout_height="275dp"
+        android:layout_width="199dp"
+        android:layout_height="285dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.686"

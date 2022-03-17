@@ -19,4 +19,6 @@
     <string name="acierto">You got it right!!</string>
     <string name="fallo">You have not hit</string>
     <string name="turno">Turn for:</string>
+    <string name="cabeceraJugador">Player:</string>
+    <string name="cabeceraPuntos">Score:</string>
 </resources>
