@@ -196,4 +196,16 @@ public class MiDB extends SQLiteOpenHelper {
         db.close();
     }
 
+    // Obtener los nombres de los jugadores en un Array y por orden de puntos
+    public String[] jugadoresPorPuntos(){
+        String[] nombres = new String[this.numeroJugadores()];
+        int i = 0;
+        Cursor cursor = getReadableDatabase().rawQuery("SELECT nombre FROM jugadores ORDER BY puntos DESC", (String[]) null);
+        while(cursor.moveToNext()){
+            nombres[i] = cursor.getString(0);
+            i++;
+        }
+        cursor.close();
+        return nombres;
+    }
 }

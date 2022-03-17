@@ -21,4 +21,6 @@
     <string name="turno">Turn for:</string>
     <string name="cabeceraJugador">Player:</string>
     <string name="cabeceraPuntos">Score:</string>
+    <string name="tituloRanking">Ranking</string>
+    <string name="jugarOtraVez">Play again</string>
 </resources>

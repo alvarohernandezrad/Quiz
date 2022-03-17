@@ -142,6 +142,9 @@ public class Partida extends AppCompatActivity {
         // Puede ser que ya haya un ganador, o que todavía haya que seguir jugando
         if(this.database.comprobarGanador()){
             Log.d("ganador", "tenemos ganador");
+            Intent intentGanar = new Intent(this, Ranking.class);
+            startActivity(intentGanar);
+            finish();
         }else {
             Intent intentSeguir = new Intent(this, Partida.class);
             intentSeguir.putExtra("jugadorAnterior", jugadorActual);

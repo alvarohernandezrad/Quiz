@@ -20,4 +20,6 @@
     <string name="turno">Turno de:</string>
     <string name="cabeceraJugador">Jugador:</string>
     <string name="cabeceraPuntos">Puntos:</string>
+    <string name="tituloRanking">Ranking</string>
+    <string name="jugarOtraVez">Jugar de nuevo</string>
 </resources>
