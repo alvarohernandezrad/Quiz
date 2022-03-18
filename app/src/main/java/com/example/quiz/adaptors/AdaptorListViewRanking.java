@@ -21,12 +21,12 @@ public class AdaptorListViewRanking extends BaseAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
     private String[] nombres;
-    private int[] imagenes;
+    private int[] imagenes = {R.drawable.medalla1, R.drawable.medalla2, R.drawable.medalla3, R.drawable.carafeliz, R.drawable.carafeliz, R.drawable.carafeliz};
 
     public AdaptorListViewRanking(Context pcontext, String[] pnombres){
-        this.context = pcontext;
-        this.nombres = pnombres;
-        this.layoutInflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        context = pcontext;
+        nombres = pnombres;
+        layoutInflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
     public int getCount(){
@@ -46,23 +46,12 @@ public class AdaptorListViewRanking extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup){
 
         view = layoutInflater.inflate(R.layout.ranking, null);
-        this.imagenes = new int[this.getCount()];
-        for(int j = 0; j < this.imagenes.length; j++){
-            switch (i){
-                case 0:
-                    this.imagenes[i] = R.drawable.medalla1;
-                case 1:
-                    this.imagenes[i] = R.drawable.medalla2;
-                case 2:
-                    this.imagenes[i] = R.drawable.medalla3;
-                default:
-                    this.imagenes[i] = R.drawable.carafeliz;
-            }
-        }
-        TextView nombre = (TextView) view.findViewById(R.id.nombreRanking);
-        ImageView imagen = (ImageView) view.findViewById(R.id.imagenRanking);
 
-        nombre.setText(nombres[i]);
+        TextView nombre = view.findViewById(R.id.nombreRanking);
+        ImageView imagen = view.findViewById(R.id.fotoRanking);
+
+        Log.d("longitud",String.valueOf(this.getCount()));
+        nombre.setText(this.nombres[i]);
         imagen.setImageResource(this.imagenes[i]);
         return view;
     }

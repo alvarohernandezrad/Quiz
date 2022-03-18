@@ -2,8 +2,11 @@ package com.example.quiz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,11 +35,21 @@ public class Ranking extends AppCompatActivity {
         this.boton = findViewById(R.id.botonRanking);
         this.database = new MiDB(this, "App", (SQLiteDatabase.CursorFactory) null, 1);
 
+        // Para cancelar la notificación
+        // Recogemos el id que nos ha pasado la anterior actividad, y borramos la notificación
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            int id = extras.getInt("id");
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.cancel(id);
+        }
+
         this.titulo.setText(R.string.tituloRanking);
         this.boton.setText(R.string.jugarOtraVez);
         this.imagen.setImageResource(R.drawable.quizimagen);
 
         String[] nombres = this.database.jugadoresPorPuntos();
+
         AdaptorListViewRanking adaptador = new AdaptorListViewRanking(getApplicationContext(), nombres);
         this.lista.setAdapter(adaptador);
     }

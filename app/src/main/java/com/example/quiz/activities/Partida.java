@@ -1,10 +1,17 @@
 package com.example.quiz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -141,7 +148,7 @@ public class Partida extends AppCompatActivity {
         // Comprobamos a que Intent debemos pasar
         // Puede ser que ya haya un ganador, o que todavía haya que seguir jugando
         if(this.database.comprobarGanador()){
-            Log.d("ganador", "tenemos ganador");
+            lanzarNotificacion();
             Intent intentGanar = new Intent(this, Ranking.class);
             startActivity(intentGanar);
             finish();
@@ -154,4 +161,24 @@ public class Partida extends AppCompatActivity {
         }
     }
 
+    private void lanzarNotificacion() {
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "IdCanal");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel canal = new NotificationChannel("IdCanal", "NombreCanal", NotificationManager.IMPORTANCE_DEFAULT);
+            manager.createNotificationChannel(canal);
+        }
+        Intent intentNotificacion = new Intent(this, Ranking.class);
+        intentNotificacion.putExtra("id",1);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intentNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.quizimagen))
+                .setSmallIcon(android.R.drawable.star_on)
+                .setContentTitle("Ranking")
+                .setContentText("Ya tenemos un ganador!!")
+                .setVibrate(new long[]{0, 1000, 500, 1000})
+                .setAutoCancel(true)
+                .addAction(android.R.drawable.ic_input_add,"Ver el Ranking", pendingIntent);
+        manager.notify(1, builder.build());
+    }
 }
