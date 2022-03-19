@@ -45,11 +45,15 @@ public class Partida extends AppCompatActivity {
     private static int jugadorAnterior;
     private static int jugadorActual;
     private static int correcta;
-
+    private static int idPregunta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        idPregunta = 0;
+        if(savedInstanceState != null){
+            idPregunta = savedInstanceState.getInt("idPregunta");
+        }
         setContentView(R.layout.activity_partida);
         // por ahora voy a usar solo el logo. En el futuro tal vez agregue una imagen a cada foto.
         this.imagen = findViewById(R.id.imagenPartida);
@@ -67,17 +71,23 @@ public class Partida extends AppCompatActivity {
             jugadorActual = 0;
             jugadorAnterior = numeroJugadores;
         }
-
+        Log.d("idPre", String.valueOf(idPregunta));
         // Ver a que jugador le toca. Si el anterior ha sido menor que el total +1. Si no 0 (índice empieza en 0)
         if(jugadorAnterior < numeroJugadores-1){ //añadimos el menos 1 porque el índice de los jugadores comieza en 0 y no en 1.
             jugadorActual = jugadorAnterior + 1;
         }else{
             jugadorActual = 0;
         }
+        // Comprobar si quedan preguntas disponibles
+        if(!this.database.hayPreguntasDisponibles()){
+            this.database.marcarPreguntasComoNoLeidas();
+        }
 
         // Cargar la pregunta de la base de datos y marcarla como leída para que no se repita
-        turno = this.database.recibirPreguntaYMarcarComoLeida();
+        turno = this.database.recibirPreguntaYMarcarComoLeida(idPregunta);
 
+        // Guardamos el id de la pregunta para por si rotamos el móvil, mantener la misma pregunta.
+        idPregunta = turno.getId();
         // En el futuro, intentaré que algunas preguntas contengan fotos. Eso supondrá cargar de la base de datos
         // el nombre de la imagen. Si tiene alguna nombre para la foto, se carga esa foto en el icono. Si no tiene foto
         // se carga la imagen default
@@ -125,14 +135,6 @@ public class Partida extends AppCompatActivity {
                pasarDeIntent();
            }
         });
-
-
-        // Comprobar si existe algún jugador con 10 aciertos. Si es así saltar a un intent con listView personalizada con ranking
-        // Y mostrar una notificación de que existe algún jugador ganador
-
-
-        Intent i = new Intent(this, Partida.class);
-        i.putExtra("jugadorAnterior", jugadorActual);
     }
 
     private void acierto() { // Se ha respondido la pregunta correctamente
@@ -168,17 +170,24 @@ public class Partida extends AppCompatActivity {
             NotificationChannel canal = new NotificationChannel("IdCanal", "NombreCanal", NotificationManager.IMPORTANCE_DEFAULT);
             manager.createNotificationChannel(canal);
         }
-        Intent intentNotificacion = new Intent(this, Ranking.class);
-        intentNotificacion.putExtra("id",1);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intentNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
+        //Intent intentNotificacion = new Intent(this, Ranking.class);
+        //intentNotificacion.putExtra("id",1);
+        //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intentNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.quizimagen))
                 .setSmallIcon(android.R.drawable.star_on)
                 .setContentTitle("Ranking")
                 .setContentText("Ya tenemos un ganador!!")
                 .setVibrate(new long[]{0, 1000, 500, 1000})
-                .setAutoCancel(true)
-                .addAction(android.R.drawable.ic_input_add,"Ver el Ranking", pendingIntent);
+                .setAutoCancel(true);
+                //.addAction(android.R.drawable.ic_input_add,"Ver el Ranking", pendingIntent);
         manager.notify(1, builder.build());
+    }
+
+    // Programamos el método onSaveInstanceState para que al rotar la pantalla se mantenga la misma pregunta
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putInt("idPregunta", idPregunta);
     }
 }

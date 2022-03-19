@@ -197,10 +197,16 @@ public class MiDB extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Turno recibirPreguntaYMarcarComoLeida(){
+    public Turno recibirPreguntaYMarcarComoLeida(int idPregunta){
         SQLiteDatabase db = getWritableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT id, pregunta, respuesta1, respuesta2, respuesta3, respuesta4, tipo, correcta FROM preguntas WHERE hecha = 0 ORDER BY random() LIMIT 1", null);
+        Cursor cursor;
+        // Si idPregunta es 0, significa que es la primera pregunta de la partida. Si es algún otro número, se hace así por si se rota el móvil.
+        if(idPregunta == 0){
+             cursor = db.rawQuery("SELECT id, pregunta, respuesta1, respuesta2, respuesta3, respuesta4, tipo, correcta FROM preguntas WHERE hecha = 0 ORDER BY random() LIMIT 1", null);
+        }else{
+             cursor = db.rawQuery("SELECT id, pregunta, respuesta1, respuesta2, respuesta3, respuesta4, tipo, correcta FROM preguntas WHERE id = "+idPregunta+" ORDER BY random() LIMIT 1", null);
+        }
+        //cursor = db.rawQuery("SELECT id, pregunta, respuesta1, respuesta2, respuesta3, respuesta4, tipo, correcta FROM preguntas WHERE hecha = 0 ORDER BY random() LIMIT 1", null);
         cursor.moveToFirst();
         // Obtenemos el identificador de la pregunta para poder marcarla como leída después.
         int id = cursor.getInt(0);
@@ -216,7 +222,7 @@ public class MiDB extends SQLiteOpenHelper {
 
         cursor.close();
         // Marcamos la pregunta como leída
-        //db.execSQL("update preguntas set hecha = 1 where id = '"+ id +"'");
+        db.execSQL("UPDATE preguntas SET hecha = 1 WHERE id = '"+id+"'");
         db.close();
         return turno;
     }
@@ -256,7 +262,7 @@ public class MiDB extends SQLiteOpenHelper {
         cursor.close();
         db.close();
 
-        if(puntos == 7) { return true;}
+        if(puntos == 5) { return true;}
         else{ return false;}
     }
 
@@ -302,5 +308,13 @@ public class MiDB extends SQLiteOpenHelper {
         }
         cursor.close();
         return nombres;
+    }
+
+    // Miramos si no hay preguntas sin hacer
+    public boolean hayPreguntasDisponibles(){
+        if(getReadableDatabase().rawQuery("SELECT * FROM preguntas WHERE hecha = 0", (String[]) null).getCount() == 0){
+            return false;
+        }else return true;
+
     }
 }

@@ -50,14 +50,13 @@ public class AddPlayers extends AppCompatActivity implements PlayerListFragment.
         texto.setText(R.string.textoAñadir);
         botonJugar.setText(R.string.jugar);
         botonAdd.setText(R.string.añadir);
-        nombre.setText(R.string.nombre);
 
-        nombre.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        /*nombre.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 nombre.setText("");
             }
-        });
+        });*/
     }
 
 
@@ -103,6 +102,7 @@ public class AddPlayers extends AppCompatActivity implements PlayerListFragment.
         // Añadir un jugador nuevo
         else{
             // Se añadirá como id del nuevo jugador el siguiente número al id del último jugador.
+            this.nombre.setText("");
             int id = this.database.idUltimoJugador()+1;
             this.database.insertarJugador(id, nickname);
             Toast.makeText(this, "Nuevo jugador añadido: "+nickname, Toast.LENGTH_SHORT).show();
