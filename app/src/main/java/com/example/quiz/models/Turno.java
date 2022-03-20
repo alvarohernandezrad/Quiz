@@ -53,4 +53,7 @@ public class Turno {
         this.correcta = correcta;
     }
 
+    public String getRespuestaString(int indice){
+        return this.respuestas.get(indice);
+    }
 }

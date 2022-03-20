@@ -3,6 +3,7 @@ package com.example.quiz.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -19,6 +20,9 @@ import com.example.quiz.adaptors.AdaptorListViewBotonEliminar;
 import com.example.quiz.database.MiDB;
 import com.example.quiz.dialogs.AceptarJugadoresDialog;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class PrePartida extends AppCompatActivity implements AceptarJugadoresDialog.ListenerDelDialogo {
@@ -69,6 +73,7 @@ public class PrePartida extends AppCompatActivity implements AceptarJugadoresDia
         // el id = 0 -> número de jugadores hasta ahora (0). Para los demás, +1 del anterior. Así, aunque se borre los
         // ID-s irán del 0 al 5 aunque en el proceso se borren jugadores
         this.database.reordenarIds();
+        limpiarFicheroLog();
         Intent intentJugar = new Intent(this, Partida.class);
         startActivity(intentJugar);
     }
@@ -99,5 +104,15 @@ public class PrePartida extends AppCompatActivity implements AceptarJugadoresDia
         }
     }
 
-
+    private void limpiarFicheroLog(){
+        try{
+            OutputStreamWriter fichero = new OutputStreamWriter(openFileOutput("log.txt", Context.MODE_PRIVATE));
+            fichero.write("");
+            fichero.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

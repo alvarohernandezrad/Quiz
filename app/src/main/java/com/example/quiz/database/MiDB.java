@@ -9,8 +9,10 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.quiz.R;
 import com.example.quiz.models.Turno;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class MiDB extends SQLiteOpenHelper {
@@ -117,9 +119,18 @@ public class MiDB extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("insert into preguntas ('hecha', 'pregunta', 'respuesta1', 'respuesta2', 'respuesta3', 'respuesta4', 'tipo', 'correcta') values (0, '¿Con qué denominación se conoce la línea dibujada por las estrellas Alnitak, Alnilam y Mintaka vistas desde nuestro planeta?', 'Cinturón de Orión', 'Osa Mayor', 'Osa Menor', 'Casiopea', 'Naturaleza y Ciencias', 0)");
         sqLiteDatabase.execSQL("insert into preguntas ('hecha', 'pregunta', 'respuesta1', 'respuesta2', 'respuesta3', 'respuesta4', 'tipo', 'correcta') values (0, '¿Cómo se llama la planta a partir de la cual suele ser elaborado el tequila?', 'Trigo', 'Agave', 'Cebada', 'Ajenjo', 'Naturaleza y Ciencias', 1)");
         sqLiteDatabase.execSQL("insert into preguntas ('hecha', 'pregunta', 'respuesta1', 'respuesta2', 'respuesta3', 'respuesta4', 'tipo', 'correcta') values (0, '¿Qué nombre recibe el sistema de transcripción fonética usado en el chino mandarín?', 'Chiniki', 'Romayi', 'Pinyin', 'Corini', 'Naturaleza y Ciencias', 2)");
-
-
     }
+
+    /*public void onCreate(SQLiteDatabase sqLiteDatabase){
+        sqLiteDatabase.execSQL("CREATE TABLE jugadores('nombre' VARCHAR(255) PRIMARY KEY NOT NULL, 'id' INTEGER NOT NULL, 'puntos' INTEGER not null)");
+        sqLiteDatabase.execSQL("CREATE TABLE preguntas('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'hecha' INTEGER NOT NULL, 'pregunta' TEXT NOT NULL, 'respuesta1' VARCHAR(255) NOT NULL, 'respuesta2' VARCHAR(255) NOT NULL, 'respuesta3' VARCHAR(255) NOT NULL, 'respuesta4' VARCHAR(255) NOT NULL, 'tipo' VARCHAR(255) NOT NULL, 'correcta' INTEGER NOT NULL)");
+    }
+
+    public void cargarPregunta(String pregunta){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(pregunta);
+        db.close();
+    }*/
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {

@@ -13,13 +13,20 @@ import android.widget.ImageView;
 import com.example.quiz.R;
 import com.example.quiz.database.MiDB;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 public class MainActivity extends AppCompatActivity {
 
-    MiDB database = new MiDB(this, "App", (SQLiteDatabase.CursorFactory) null, 1);
+    private MiDB database = new MiDB(this, "App", (SQLiteDatabase.CursorFactory) null, 1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //cargarPreguntas();
         setContentView(R.layout.activity_main);
 
         ImageView imagen = findViewById(R.id.imagenInicio);
@@ -45,4 +52,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    /*private void cargarPreguntas(){
+        InputStream fichero = getResources().openRawResource(R.raw.basedatos);
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(fichero));
+        try{
+            String linea = buffer.readLine();
+            while (linea != null){
+                this.database.cargarPregunta(linea);
+            }
+            fichero.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }*/
 }

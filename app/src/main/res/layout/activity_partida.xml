@@ -12,10 +12,10 @@
         android:layout_height="163dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.233"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.151"
+        app:layout_constraintVertical_bias="0.146"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -56,5 +56,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.09" />
+
+    <Button
+        android:id="@+id/botonLogPartida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickBotonLog"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/preguntaPartida"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imagenPartida"
+        app:layout_constraintTop_toBottomOf="@+id/turnoPartida" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

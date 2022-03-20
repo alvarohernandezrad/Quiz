@@ -10,6 +10,7 @@
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout-land/activity_pre_partida.xml" value="0.16" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout-land/main_activity.xml" value="0.775" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_add_players.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_log.xml" value="0.12" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_partida.xml" value="0.2" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_pre_partida.xml" value="0.2" />
@@ -17,10 +18,12 @@
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_simson.xml" value="0.12604166666666666" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/fila.xml" value="0.264" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/fila_simson.xml" value="0.12604166666666666" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/fragment_preferences.xml" value="0.1625" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/jugadores_fragment.xml" value="0.2" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/jugadores_puntos.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/login_page.xml" value="0.20885416666666667" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/ranking.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/xml/pref_config.xml" value="0.1765625" />
       </map>
     </option>
   </component>

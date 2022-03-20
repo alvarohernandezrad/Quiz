@@ -23,4 +23,5 @@
     <string name="cabeceraPuntos">Puntos:</string>
     <string name="jugarOtraVez">Jugar de nuevo</string>
     <string name="tituloRanking">Ranking</string>
+    <string name="seguirJugando">Seguir jugando</string>
 </resources>

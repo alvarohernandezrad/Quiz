@@ -5,7 +5,6 @@ import androidx.core.app.NotificationCompat;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -17,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,9 +25,12 @@ import android.widget.Toast;
 import com.example.quiz.R;
 import com.example.quiz.adaptors.AdaptorListViewJugadorPuntos;
 import com.example.quiz.database.MiDB;
+import com.example.quiz.models.Jugador;
 import com.example.quiz.models.Turno;
 
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 public class Partida extends AppCompatActivity {
 
@@ -39,13 +42,18 @@ public class Partida extends AppCompatActivity {
     private ListView jugadoresPuntos; // Solo en modo horizontal
     private TextView cabeceraJugador; // Solo en modo horizontal
     private TextView cabeceraPuntos; // Solo en modo horizontal
+    private Button botonLog;
 
     private Turno turno;
+    private static int numeroTurno;
     private static int numeroJugadores;
     private static int jugadorAnterior;
     private static int jugadorActual;
     private static int correcta;
     private static int idPregunta;
+
+    private static String respuestaJugadorString;
+    private static String respuestaCorrectaString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +69,19 @@ public class Partida extends AppCompatActivity {
         this.respuestas = findViewById(R.id.respuestasPartida);
         this.textoTurno = findViewById(R.id.turnoPartida);
         this.database = new MiDB(this, "App", (SQLiteDatabase.CursorFactory) null, 1);
+        this.botonLog = findViewById(R.id.botonLogPartida);
+
 
         // Obtener número de jugadores
         numeroJugadores = this.database.numeroJugadores();
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             jugadorAnterior = extras.getInt("jugadorAnterior");
+            numeroTurno = extras.getInt("numeroTurno")+1;
         }else{
             jugadorActual = 0;
             jugadorAnterior = numeroJugadores;
+            numeroTurno = 1;
         }
         Log.d("idPre", String.valueOf(idPregunta));
         // Ver a que jugador le toca. Si el anterior ha sido menor que el total +1. Si no 0 (índice empieza en 0)
@@ -93,11 +105,12 @@ public class Partida extends AppCompatActivity {
         // se carga la imagen default
 
         this.imagen.setImageResource(R.drawable.quizimagen);
-
+        this.botonLog.setText("Log");
         this.pregunta.setText(turno.getPregunta());
         String nombreJugadorActual = this.database.nombreJugadorActual(jugadorActual);
         this.textoTurno.setText(getResources().getString(R.string.turno) + " " + nombreJugadorActual);
         correcta = turno.getCorrecta();
+        respuestaCorrectaString = turno.getRespuestaString(correcta);
 
         // Convertir ArrayList con las respuestas en Array para el adaptador
         String[] arrayRespuestas = new String[turno.getRespuestas().size()];
@@ -125,6 +138,8 @@ public class Partida extends AppCompatActivity {
         respuestas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
            @Override
            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+               respuestaJugadorString = turno.getRespuestaString((int)l);
+               Log.d("queenel", respuestaJugadorString);
                if(correcta == l){
                    acierto();
                    adapterView.getChildAt(i).setBackgroundColor(getResources().getColor(android.R.color.holo_green_dark));
@@ -132,6 +147,7 @@ public class Partida extends AppCompatActivity {
                    fallo();
                    adapterView.getChildAt(i).setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
                }
+               registrarLog(nombreJugadorActual);
                pasarDeIntent();
            }
         });
@@ -157,6 +173,7 @@ public class Partida extends AppCompatActivity {
         }else {
             Intent intentSeguir = new Intent(this, Partida.class);
             intentSeguir.putExtra("jugadorAnterior", jugadorActual);
+            intentSeguir.putExtra("numeroTurno", numeroTurno);
             startActivity(intentSeguir);
             //Al pasar de intent acabamos el activity actual
             finish();
@@ -190,4 +207,30 @@ public class Partida extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putInt("idPregunta", idPregunta);
     }
+
+    private void registrarLog(String nombre){
+        try{
+            OutputStreamWriter fichero = new OutputStreamWriter(openFileOutput("log.txt", Context.MODE_APPEND));
+            fichero.write("Turno "+numeroTurno+".- Pregunta: "+turno.getPregunta().toUpperCase()+"; Jugador: "+nombre.toUpperCase()+"; Respuesta jugador: "+respuestaJugadorString.toUpperCase()+"; Respuesta correcta: "+respuestaCorrectaString.toUpperCase()+".\n");
+            /*fichero.write("Turno "+numeroTurno+"\n");
+            fichero.write("Jugador: "+nombre.toUpperCase()+"\n");
+            fichero.write("Pregunta: "+turno.getPregunta().toUpperCase()+"\n");
+            fichero.write("Respuesta jugador: "+respuestaJugadorString.toUpperCase()+"\n");
+            fichero.write("Respuesta correcta: "+respuestaCorrectaString.toUpperCase()+"\n");
+            fichero.write("--------------------------\n");*/
+            fichero.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onClickBotonLog(View view){
+        Intent intentLog = new Intent(this, LogPartida.class);
+        intentLog.putExtra("numeroTurnos", numeroTurno);
+        startActivity(intentLog);
+    }
+
+
 }
