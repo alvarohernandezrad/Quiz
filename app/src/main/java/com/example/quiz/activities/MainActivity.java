@@ -88,12 +88,25 @@ public class MainActivity extends AppCompatActivity {
     private void cargarPreferenciasIdioma() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String actual = prefs.getString("idioma", "ES");
-        Log.d("paso1", actual);
-        Log.d("paso1", this.getResources().getConfiguration().locale.getDisplayLanguage());
+        String idioma = this.getResources().getConfiguration().locale.getDisplayLanguage();
+        String ingles, castellano;
+        boolean movilEnEspañol;
+        if(idioma.equals("inglés") || idioma.equals("español")){
+            movilEnEspañol = true;
+        }else{
+            movilEnEspañol = false;
+        }
+        if(movilEnEspañol){
+            ingles = "inglés";
+            castellano = "español";
+        }else{
+            ingles = "English";
+            castellano = "Spanish";
+        }
         Locale nuevaloc;
-        if (actual.equals("ES") && !this.getResources().getConfiguration().locale.getDisplayLanguage().equals("español")){
+        if (actual.equals("ES") && !this.getResources().getConfiguration().locale.getDisplayLanguage().equals(castellano)){
             nuevaloc = new Locale(actual.toLowerCase());
-        }else if(actual.equals("EN") && !this.getResources().getConfiguration().locale.getDisplayLanguage().equals("inglés")){
+        }else if(actual.equals("EN") && !this.getResources().getConfiguration().locale.getDisplayLanguage().equals(ingles)){
             nuevaloc = new Locale(actual.toLowerCase());
         }else{
             return;
