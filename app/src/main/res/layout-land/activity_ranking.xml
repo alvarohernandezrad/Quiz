@@ -9,7 +9,7 @@
         android:id="@+id/tituloRanking"
         android:layout_width="341dp"
         android:layout_height="45dp"
-        android:layout_marginStart="84dp"
+        android:layout_marginStart="44dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="TextView"
@@ -17,18 +17,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintVertical_bias="0.043" />
 
     <ImageView
         android:id="@+id/imagenRanking"
-        android:layout_width="105dp"
-        android:layout_height="84dp"
+        android:layout_width="165dp"
+        android:layout_height="91dp"
         app:layout_constraintBottom_toTopOf="@+id/listaRanking"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.343"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toEndOf="@+id/tituloRanking"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintVertical_bias="0.079"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ListView
