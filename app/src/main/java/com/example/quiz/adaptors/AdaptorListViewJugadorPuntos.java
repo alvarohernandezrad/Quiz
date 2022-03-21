@@ -10,10 +10,10 @@ import android.widget.TextView;
 import com.example.quiz.R;
 
 public class AdaptorListViewJugadorPuntos extends BaseAdapter {
-    private Context contexto;
-    private LayoutInflater inflater;
-    private String[] nombres;
-    private int[] puntos;
+    Context contexto;
+    LayoutInflater inflater;
+    String[] nombres;
+    int[] puntos;
 
     public AdaptorListViewJugadorPuntos(Context pContext, String[] pNombres, int[] pPuntos){
         this.contexto = pContext;

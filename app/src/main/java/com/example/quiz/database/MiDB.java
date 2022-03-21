@@ -1,18 +1,15 @@
 package com.example.quiz.database;
 
-import android.content.ContentValues;
+
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import androidx.core.app.NotificationCompat;
-
-import com.example.quiz.R;
 import com.example.quiz.models.Turno;
 
-import java.io.InputStream;
+
 import java.util.ArrayList;
 
 public class MiDB extends SQLiteOpenHelper {
@@ -21,11 +18,8 @@ public class MiDB extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        //sqLiteDatabase.execSQL("create table players('name' varchar(255) primary key not null)");
         sqLiteDatabase.execSQL("CREATE TABLE jugadores('nombre' VARCHAR(255) PRIMARY KEY NOT NULL, 'id' INTEGER NOT NULL, 'puntos' INTEGER not null)");
         sqLiteDatabase.execSQL("CREATE TABLE preguntas('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'hecha' INTEGER NOT NULL, 'pregunta' TEXT NOT NULL, 'respuesta1' VARCHAR(255) NOT NULL, 'respuesta2' VARCHAR(255) NOT NULL, 'respuesta3' VARCHAR(255) NOT NULL, 'respuesta4' VARCHAR(255) NOT NULL, 'tipo' VARCHAR(255) NOT NULL, 'correcta' INTEGER NOT NULL)");
-        //sqLiteDatabase.execSQL("insert into preguntas ('hecha', 'pregunta', 'respuesta1', 'respuesta2', 'respuesta3', 'respuesta4', 'tipo', 'correcta') values (0, '¿Quien es mejor?','Messi', 'Ronaldo', 'Aduriz', 'Mbappe', 'Deportes',3)");
-        //sqLiteDatabase.execSQL("insert into preguntas ('hecha', 'pregunta', 'respuesta1', 'respuesta2', 'respuesta3', 'respuesta4', 'tipo', 'correcta') values (0, '¿Quien es mejor?','Maria', 'Laura', 'Sara', 'Claudia', 'Deportes',0)");
         sqLiteDatabase.execSQL("insert into preguntas ('hecha', 'pregunta', 'respuesta1', 'respuesta2', 'respuesta3', 'respuesta4', 'tipo', 'correcta') values (0, '¿Quién fue el primer presidente de la democracia española tras el franquismo?', 'José María Aznar', 'Felipe González', 'Adolfo Suaréz', 'Leopoldo Calvo Sotelo', 'Historia', 2)");
         sqLiteDatabase.execSQL("insert into preguntas ('hecha', 'pregunta', 'respuesta1', 'respuesta2', 'respuesta3', 'respuesta4', 'tipo', 'correcta') values (0, '¿La invasión de qué fortaleza por parte de los revolucionarios es considerada como el punto de inicio de la Revolución Francesa?', 'La torre Eiffel', 'El palacio de Versailles', 'La Bastilla', 'El castillo de Chambord', 'Historia', 2)");
         sqLiteDatabase.execSQL("insert into preguntas ('hecha', 'pregunta', 'respuesta1', 'respuesta2', 'respuesta3', 'respuesta4', 'tipo', 'correcta') values (0, '¿En qué año el hombre pisó la Luna por primera vez?', '1969', '1970', '1968', '1972', 'Historia', 0)");
@@ -121,17 +115,6 @@ public class MiDB extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("insert into preguntas ('hecha', 'pregunta', 'respuesta1', 'respuesta2', 'respuesta3', 'respuesta4', 'tipo', 'correcta') values (0, '¿Qué nombre recibe el sistema de transcripción fonética usado en el chino mandarín?', 'Chiniki', 'Romayi', 'Pinyin', 'Corini', 'Naturaleza y Ciencias', 2)");
     }
 
-    /*public void onCreate(SQLiteDatabase sqLiteDatabase){
-        sqLiteDatabase.execSQL("CREATE TABLE jugadores('nombre' VARCHAR(255) PRIMARY KEY NOT NULL, 'id' INTEGER NOT NULL, 'puntos' INTEGER not null)");
-        sqLiteDatabase.execSQL("CREATE TABLE preguntas('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'hecha' INTEGER NOT NULL, 'pregunta' TEXT NOT NULL, 'respuesta1' VARCHAR(255) NOT NULL, 'respuesta2' VARCHAR(255) NOT NULL, 'respuesta3' VARCHAR(255) NOT NULL, 'respuesta4' VARCHAR(255) NOT NULL, 'tipo' VARCHAR(255) NOT NULL, 'correcta' INTEGER NOT NULL)");
-    }
-
-    public void cargarPregunta(String pregunta){
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL(pregunta);
-        db.close();
-    }*/
-
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
@@ -174,10 +157,9 @@ public class MiDB extends SQLiteOpenHelper {
         return puntuaciones;
     }
 
+
     public boolean existeJugador(String nickname){
-       if(getReadableDatabase().rawQuery("SELECT nombre FROM jugadores WHERE nombre='" + nickname + "'", (String[]) null).getCount() == 0){
-            return false;
-       }else return true;
+        return getReadableDatabase().rawQuery("SELECT nombre FROM jugadores WHERE nombre='" + nickname + "'", (String[]) null).getCount() != 0;
     }
 
     public void insertarJugador(int id, String nickname){
@@ -187,13 +169,12 @@ public class MiDB extends SQLiteOpenHelper {
     }
 
     public int numeroJugadores(){
-       int numero = getReadableDatabase().rawQuery("SELECT * FROM jugadores", (String[]) null).getCount();
-       return numero;
+       return getReadableDatabase().rawQuery("SELECT * FROM jugadores", (String[]) null).getCount();
+
     }
 
     public int numeroPreguntas(){
-        int numero = getReadableDatabase().rawQuery("SELECT * FROM preguntas", (String[]) null).getCount();
-        return numero;
+        return getReadableDatabase().rawQuery("SELECT * FROM preguntas", (String[]) null).getCount();
     }
 
     public void limpiarTablaJugadores(){
@@ -223,7 +204,7 @@ public class MiDB extends SQLiteOpenHelper {
         int id = cursor.getInt(0);
         // Obtenemos los elementos necesarios para construir un Turno
         String pregunta = cursor.getString(1);
-        ArrayList<String> respuestas = new ArrayList<String>();
+        ArrayList<String> respuestas = new ArrayList<>();
         for (int i = 2; i <= 5; i++) {
             respuestas.add(cursor.getString(i));
         }
@@ -273,8 +254,7 @@ public class MiDB extends SQLiteOpenHelper {
         cursor.close();
         db.close();
 
-        if(puntos == 5) { return true;}
-        else{ return false;}
+        return puntos == 7;
     }
 
     public int idUltimoJugador(){
@@ -293,7 +273,7 @@ public class MiDB extends SQLiteOpenHelper {
         // Obtenemos todos los ids en un arraylist
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT id FROM jugadores", null);
-        ArrayList<Integer> listaIds = new ArrayList<Integer>();
+        ArrayList<Integer> listaIds = new ArrayList<>();
         // Mientras haya más ids
         while(cursor.moveToNext()){
             int id = cursor.getInt(0);
@@ -323,9 +303,7 @@ public class MiDB extends SQLiteOpenHelper {
 
     // Miramos si no hay preguntas sin hacer
     public boolean hayPreguntasDisponibles(){
-        if(getReadableDatabase().rawQuery("SELECT * FROM preguntas WHERE hecha = 0", (String[]) null).getCount() == 0){
-            return false;
-        }else return true;
+        return getReadableDatabase().rawQuery("SELECT * FROM preguntas WHERE hecha = 0", (String[]) null).getCount() != 0;
 
     }
 }

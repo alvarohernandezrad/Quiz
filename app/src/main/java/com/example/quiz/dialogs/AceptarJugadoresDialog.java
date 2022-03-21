@@ -2,7 +2,6 @@ package com.example.quiz.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,18 +26,8 @@ public class AceptarJugadoresDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.estasSeguro);
-        builder.setPositiveButton("Sí, estoy seguro", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                miListener.clickarSiDialog();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                miListener.clickarNoDialog();
-            }
-        });
+        builder.setPositiveButton(R.string.siSeguro, (dialogInterface, i) -> miListener.clickarSiDialog());
+        builder.setNegativeButton("No", (dialogInterface, i) -> miListener.clickarNoDialog());
         return builder.create();
     }
 }

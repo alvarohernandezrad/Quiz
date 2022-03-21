@@ -1,5 +1,6 @@
 package com.example.quiz.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
@@ -25,7 +26,7 @@ import android.widget.Toast;
 import com.example.quiz.R;
 import com.example.quiz.adaptors.AdaptorListViewJugadorPuntos;
 import com.example.quiz.database.MiDB;
-import com.example.quiz.models.Jugador;
+import com.example.quiz.models.AuxiliarColores;
 import com.example.quiz.models.Turno;
 
 import java.io.FileNotFoundException;
@@ -34,30 +35,31 @@ import java.io.OutputStreamWriter;
 
 public class Partida extends AppCompatActivity {
 
-    private MiDB database;
-    private ImageView imagen;
-    private TextView pregunta;
-    private ListView respuestas;
-    private TextView textoTurno;
-    private ListView jugadoresPuntos; // Solo en modo horizontal
-    private TextView cabeceraJugador; // Solo en modo horizontal
-    private TextView cabeceraPuntos; // Solo en modo horizontal
-    private Button botonLog;
+    MiDB database;
+    ImageView imagen;
+    TextView pregunta;
+    ListView respuestas;
+    TextView textoTurno;
+    ListView jugadoresPuntos; // Solo en modo horizontal
+    TextView cabeceraJugador; // Solo en modo horizontal
+    TextView cabeceraPuntos; // Solo en modo horizontal
+    Button botonLog;
 
-    private Turno turno;
-    private static int numeroTurno;
-    private static int numeroJugadores;
-    private static int jugadorAnterior;
-    private static int jugadorActual;
-    private static int correcta;
-    private static int idPregunta;
+    Turno turno;
+    static int numeroTurno;
+    static int numeroJugadores;
+    static int jugadorAnterior;
+    static int jugadorActual;
+    static int correcta;
+    static int idPregunta;
 
-    private static String respuestaJugadorString;
-    private static String respuestaCorrectaString;
+    static String respuestaJugadorString;
+    static String respuestaCorrectaString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AuxiliarColores.elegirColor(this);
         idPregunta = 0;
         if(savedInstanceState != null){
             idPregunta = savedInstanceState.getInt("idPregunta");
@@ -115,7 +117,7 @@ public class Partida extends AppCompatActivity {
         // Convertir ArrayList con las respuestas en Array para el adaptador
         String[] arrayRespuestas = new String[turno.getRespuestas().size()];
         arrayRespuestas = turno.getRespuestas().toArray(arrayRespuestas);
-        ArrayAdapter adaptadorPreguntas = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayRespuestas);
+        ArrayAdapter adaptadorPreguntas = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayRespuestas);
         this.respuestas.setAdapter(adaptadorPreguntas);
 
         //Si estamos en orientación horizontal, añadimos lo necesario para añadir la ListView personalizada Jugador-Puntos
@@ -135,21 +137,18 @@ public class Partida extends AppCompatActivity {
             this.cabeceraPuntos.setText(R.string.cabeceraPuntos);
         }
 
-        respuestas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               respuestaJugadorString = turno.getRespuestaString((int)l);
-               Log.d("queenel", respuestaJugadorString);
-               if(correcta == l){
-                   acierto();
-                   adapterView.getChildAt(i).setBackgroundColor(getResources().getColor(android.R.color.holo_green_dark));
-               }else{
-                   fallo();
-                   adapterView.getChildAt(i).setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
-               }
-               registrarLog(nombreJugadorActual);
-               pasarDeIntent();
-           }
+        respuestas.setOnItemClickListener((adapterView, view, i, l) -> {
+            respuestaJugadorString = turno.getRespuestaString((int)l);
+            Log.d("queenel", respuestaJugadorString);
+            if(correcta == l){
+                acierto();
+                adapterView.getChildAt(i).setBackgroundColor(getResources().getColor(android.R.color.holo_green_dark));
+            }else{
+                fallo();
+                adapterView.getChildAt(i).setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
+            }
+            registrarLog(nombreJugadorActual);
+            pasarDeIntent();
         });
     }
 
@@ -203,7 +202,7 @@ public class Partida extends AppCompatActivity {
 
     // Programamos el método onSaveInstanceState para que al rotar la pantalla se mantenga la misma pregunta
     @Override
-    protected void onSaveInstanceState(Bundle outState){
+    protected void onSaveInstanceState(@NonNull Bundle outState){
         super.onSaveInstanceState(outState);
         outState.putInt("idPregunta", idPregunta);
     }
@@ -212,12 +211,6 @@ public class Partida extends AppCompatActivity {
         try{
             OutputStreamWriter fichero = new OutputStreamWriter(openFileOutput("log.txt", Context.MODE_APPEND));
             fichero.write("Turno "+numeroTurno+".- Pregunta: "+turno.getPregunta().toUpperCase()+"; Jugador: "+nombre.toUpperCase()+"; Respuesta jugador: "+respuestaJugadorString.toUpperCase()+"; Respuesta correcta: "+respuestaCorrectaString.toUpperCase()+".\n");
-            /*fichero.write("Turno "+numeroTurno+"\n");
-            fichero.write("Jugador: "+nombre.toUpperCase()+"\n");
-            fichero.write("Pregunta: "+turno.getPregunta().toUpperCase()+"\n");
-            fichero.write("Respuesta jugador: "+respuestaJugadorString.toUpperCase()+"\n");
-            fichero.write("Respuesta correcta: "+respuestaCorrectaString.toUpperCase()+"\n");
-            fichero.write("--------------------------\n");*/
             fichero.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

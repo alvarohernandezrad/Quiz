@@ -24,4 +24,10 @@
     <string name="jugarOtraVez">Jugar de nuevo</string>
     <string name="tituloRanking">Ranking</string>
     <string name="seguirJugando">Seguir jugando</string>
+    <string name="temaOscuro">Tema Oscuro</string>
+    <string name="idioma">Idioma</string>
+    <string name="ajustes">Ajustes</string>
+    <string name="color">Color Favorito</string>
+    <string name="siSeguro">Sí, estoy seguro</string>
+    <string name="proyecto">Ver en GitHub</string>
 </resources>

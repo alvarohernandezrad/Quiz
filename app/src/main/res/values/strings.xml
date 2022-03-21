@@ -10,7 +10,7 @@
     <string name="nombreYaExiste">Este nombre de jugador ya existe</string>
     <string name="faltanJugadores">Faltan jugadores por añadir</string>
     <string name="noMasJugadores">La lista de jugadores está completa</string>
-    <string name="jugadorAñadido">Nuevo jugador añadido:</string>
+    <string name="jugadorAñadido">"Nuevo jugador añadido: "</string>
     <string name="listaJugadores">Lista de jugadores</string>
     <string name="eliminarJugador">Mantén para eliminar jugador</string>
     <string name="estasSeguro">¿Estás seguro de que quieres continuar con estos jugadores?</string>
@@ -22,6 +22,11 @@
     <string name="cabeceraPuntos">Puntos:</string>
     <string name="tituloRanking">Ranking</string>
     <string name="jugarOtraVez">Jugar de nuevo</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="seguirJugando">Seguir jugando</string>
+    <string name="temaOscuro">Tema Oscuro</string>
+    <string name="idioma">Idioma</string>
+    <string name="ajustes">Ajustes</string>
+    <string name="color">Color Favorito</string>
+    <string name="siSeguro">Sí, estoy seguro</string>
+    <string name="proyecto">Ver en GitHub</string>
 </resources>

@@ -8,9 +8,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
+
 
 import com.example.quiz.R;
+import com.example.quiz.models.AuxiliarColores;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -19,12 +20,15 @@ import java.io.InputStreamReader;
 
 public class LogPartida extends AppCompatActivity {
 
-    private ListView lista;
-    private Button boton;
+    ListView lista;
+    Button boton;
     private static int numeroTurnos;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AuxiliarColores.elegirColor(this);
         setContentView(R.layout.activity_log);
         Bundle extras = getIntent().getExtras();
         if(extras != null){
@@ -37,12 +41,7 @@ public class LogPartida extends AppCompatActivity {
         String[] log = leerLog();
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, log);
         this.lista.setAdapter(adapter);
-        this.boton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        this.boton.setOnClickListener(view -> finish());
     }
     private String[] leerLog() {
         String[] log = new String[numeroTurnos];

@@ -19,6 +19,7 @@ import com.example.quiz.R;
 import com.example.quiz.adaptors.AdaptorListViewBotonEliminar;
 import com.example.quiz.database.MiDB;
 import com.example.quiz.dialogs.AceptarJugadoresDialog;
+import com.example.quiz.models.AuxiliarColores;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,6 +35,7 @@ public class PrePartida extends AppCompatActivity implements AceptarJugadoresDia
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AuxiliarColores.elegirColor(this);
         setContentView(R.layout.activity_pre_partida);
 
         this.texto = findViewById(R.id.textoAceptar);

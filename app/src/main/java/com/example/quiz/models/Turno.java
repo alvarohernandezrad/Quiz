@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Turno {
     private int id;
     private String pregunta;
-    private ArrayList<String> respuestas = new ArrayList<String>();
+    private ArrayList<String> respuestas;
     private String tipo;
     private int correcta;
 

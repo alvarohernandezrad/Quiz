@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Quiz">
         <activity
+            android:name=".activities.PreferencesActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.LogPartida"
             android:exported="false" />
         <activity

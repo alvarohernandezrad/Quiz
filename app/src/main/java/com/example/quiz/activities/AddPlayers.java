@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,22 +16,23 @@ import android.widget.Toast;
 import com.example.quiz.R;
 import com.example.quiz.database.MiDB;
 import com.example.quiz.fragments.PlayerListFragment;
+import com.example.quiz.models.AuxiliarColores;
 
 import java.util.ArrayList;
 
 public class AddPlayers extends AppCompatActivity implements PlayerListFragment.listenerDelFragment {
 
-    private MiDB database;
-    private ImageView imagen;
-    private Button botonJugar, botonAdd;
-    private EditText nombre;
-    private TextView texto, textoLista;
+    MiDB database;
+    ImageView imagen;
+    Button botonJugar, botonAdd;
+    EditText nombre;
+    TextView texto, textoLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AuxiliarColores.elegirColor(this);
         setContentView(R.layout.activity_add_players);
-
         this.imagen = findViewById(R.id.imagenAddPlayers);
         this.texto = findViewById(R.id.textoAddPlayers);
         this.botonJugar = findViewById(R.id.botonJugarAddPlayers);
@@ -50,13 +50,6 @@ public class AddPlayers extends AppCompatActivity implements PlayerListFragment.
         texto.setText(R.string.textoAñadir);
         botonJugar.setText(R.string.jugar);
         botonAdd.setText(R.string.añadir);
-
-        /*nombre.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                nombre.setText("");
-            }
-        });*/
     }
 
 
@@ -105,7 +98,7 @@ public class AddPlayers extends AppCompatActivity implements PlayerListFragment.
             this.nombre.setText("");
             int id = this.database.idUltimoJugador()+1;
             this.database.insertarJugador(id, nickname);
-            Toast.makeText(this, "Nuevo jugador añadido: "+nickname, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.jugadorAñadido)+" "+nickname, Toast.LENGTH_SHORT).show();
             int orientation = getResources().getConfiguration().orientation;
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 actualizarDatos();
