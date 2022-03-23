@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.quiz.R;
 
+// Como necesitaba un método para utilizar en todas las actividades cree esta clase. Pone el color favorito del jugador como tema de la app
+
 public class AuxiliarColores {
 
     private static String color;

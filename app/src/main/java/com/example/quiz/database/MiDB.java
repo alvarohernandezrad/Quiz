@@ -17,6 +17,7 @@ public class MiDB extends SQLiteOpenHelper {
         super(context, name, factory, version);
     }
 
+    // Crear las tablas + insertar las preguntas
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE jugadores('nombre' VARCHAR(255) PRIMARY KEY NOT NULL, 'id' INTEGER NOT NULL, 'puntos' INTEGER not null)");
         sqLiteDatabase.execSQL("CREATE TABLE preguntas('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'hecha' INTEGER NOT NULL, 'pregunta' TEXT NOT NULL, 'respuesta1' VARCHAR(255) NOT NULL, 'respuesta2' VARCHAR(255) NOT NULL, 'respuesta3' VARCHAR(255) NOT NULL, 'respuesta4' VARCHAR(255) NOT NULL, 'tipo' VARCHAR(255) NOT NULL, 'correcta' INTEGER NOT NULL)");
@@ -157,38 +158,43 @@ public class MiDB extends SQLiteOpenHelper {
         return puntuaciones;
     }
 
-
+    // Ver si existe el jugador con el nombre que recibimos por parámetro
     public boolean existeJugador(String nickname){
         return getReadableDatabase().rawQuery("SELECT nombre FROM jugadores WHERE nombre='" + nickname + "'", (String[]) null).getCount() != 0;
     }
 
+    // Insertar un jugador con el nombre y el id que recibimos por parámetro
     public void insertarJugador(int id, String nickname){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("INSERT INTO jugadores VALUES('"+nickname+"', "+id+", 0)");
         db.close();
     }
 
+    // Devolver el número de jugadores que hay
     public int numeroJugadores(){
        return getReadableDatabase().rawQuery("SELECT * FROM jugadores", (String[]) null).getCount();
-
     }
 
+    // Número total de preguntas que existen
     public int numeroPreguntas(){
         return getReadableDatabase().rawQuery("SELECT * FROM preguntas", (String[]) null).getCount();
     }
 
+    // Método para limpiar la tabla cuando queremos jugar una nueva partida
     public void limpiarTablaJugadores(){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM jugadores WHERE 1");
         db.close();
     }
 
+    // Eliminar un jugador de la lista usando su nombre
     public void eliminarJugador(String name){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM jugadores WHERE nombre='" + name + "'");
         db.close();
     }
 
+    // Devolver un objeto Turno.
     public Turno recibirPreguntaYMarcarComoLeida(int idPregunta){
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor;
@@ -198,7 +204,6 @@ public class MiDB extends SQLiteOpenHelper {
         }else{
              cursor = db.rawQuery("SELECT id, pregunta, respuesta1, respuesta2, respuesta3, respuesta4, tipo, correcta FROM preguntas WHERE id = "+idPregunta+" ORDER BY random() LIMIT 1", null);
         }
-        //cursor = db.rawQuery("SELECT id, pregunta, respuesta1, respuesta2, respuesta3, respuesta4, tipo, correcta FROM preguntas WHERE hecha = 0 ORDER BY random() LIMIT 1", null);
         cursor.moveToFirst();
         // Obtenemos el identificador de la pregunta para poder marcarla como leída después.
         int id = cursor.getInt(0);
@@ -219,47 +224,47 @@ public class MiDB extends SQLiteOpenHelper {
         return turno;
     }
 
+    // Cuando se ha cumplido un ciclo entero de preguntas y todas han sido leídas, se reinician para ser leídas de nuevo
     public void marcarPreguntasComoNoLeidas(){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("UPDATE preguntas SET hecha = 0");
         db.close();
     }
 
+    // Nombre del jugador actual. Se le pasa el id del jugador
     public String nombreJugadorActual(int idJugadorActual){
         SQLiteDatabase db = getReadableDatabase();
-
         Cursor cursor = db.rawQuery("SELECT nombre FROM jugadores WHERE id = " + idJugadorActual + "", null);
         cursor.moveToFirst();
         // Obtenemos el nombre del jugador con el id
         String nombre = cursor.getString(0);
-
         cursor.close();
         db.close();
         return nombre;
     }
 
+    // Si se acierta una pregunta se le suma un punto a ese jugador
     public void sumarPunto(int idJugadorAcierto){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("UPDATE jugadores SET puntos = puntos+1 WHERE id = "+idJugadorAcierto+"");
         db.close();
     }
 
+    // Miramos si existe algún jugador con 7 puntos, para decir que es el ganador
     public boolean comprobarGanador(){
         SQLiteDatabase db = getReadableDatabase();
-
         Cursor cursor = db.rawQuery("SELECT MAX(puntos) FROM jugadores", null);
         cursor.moveToFirst();
         // Obtenemos el nombre del jugador con el id
         int puntos = cursor.getInt(0);
         cursor.close();
         db.close();
-
         return puntos == 7;
     }
 
+    // Devolver el id del ultimo jugador
     public int idUltimoJugador(){
         SQLiteDatabase db = getReadableDatabase();
-
         Cursor cursor = db.rawQuery("SELECT MAX(id) FROM jugadores", null);
         cursor.moveToFirst();
         // Obtenemos el nombre del jugador con el id
@@ -269,6 +274,7 @@ public class MiDB extends SQLiteOpenHelper {
         return id;
     }
 
+    // Método para reordenar los ids y dejarlos como una secuencia ordenada
     public void reordenarIds(){
         // Obtenemos todos los ids en un arraylist
         SQLiteDatabase db = getWritableDatabase();

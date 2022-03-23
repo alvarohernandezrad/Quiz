@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
 
+// Fragment para utilizar en la actividad en horizontal de añadir jugadores
 
 public class PlayerListFragment extends ListFragment {
 

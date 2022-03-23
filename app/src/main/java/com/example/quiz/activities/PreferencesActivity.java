@@ -8,6 +8,8 @@ import com.example.quiz.R;
 import com.example.quiz.models.AuxiliarColores;
 import com.example.quiz.models.Preferencias;
 
+// Actividad de preferencias
+
 public class PreferencesActivity extends AppCompatActivity {
 
     @Override

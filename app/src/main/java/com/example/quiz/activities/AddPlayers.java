@@ -20,6 +20,8 @@ import com.example.quiz.models.AuxiliarColores;
 
 import java.util.ArrayList;
 
+// Actividad en la que se añadirán los jugadores que juegan la partida
+
 public class AddPlayers extends AppCompatActivity implements PlayerListFragment.listenerDelFragment {
 
     MiDB database;
@@ -40,6 +42,8 @@ public class AddPlayers extends AppCompatActivity implements PlayerListFragment.
         this.nombre = (EditText) findViewById(R.id.nombreAddPlayers);
         this.database = new MiDB(this, "App", (SQLiteDatabase.CursorFactory) null, 1);
         int orientation = getResources().getConfiguration().orientation;
+
+        // Miramos la orientación del dispositivo, y en caso de ser horizontal añadimos un textView
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             this.textoLista = findViewById(R.id.textoLista);
             textoLista.setText(R.string.eliminarJugador);
@@ -54,6 +58,7 @@ public class AddPlayers extends AppCompatActivity implements PlayerListFragment.
 
 
     // Métodos sobreescritos del listener del fragment
+    // Cargar los jugadores a la lista
     public String[] cargarElementos() {
         ArrayList<String> jugadores = this.database.getNombresJugadores();
         String[] s = new String[jugadores.size()];
@@ -63,6 +68,7 @@ public class AddPlayers extends AppCompatActivity implements PlayerListFragment.
         return s;
     }
 
+    // Al mantener pulsado sobre un jugador eliminar de la lista y de la base de datos
     public void eliminarElemento(int pos) {
         ArrayList<String> jugadores = this.database.getNombresJugadores();
         String[] s = new String[jugadores.size()];
@@ -87,14 +93,15 @@ public class AddPlayers extends AppCompatActivity implements PlayerListFragment.
             Toast.makeText(this, getString(R.string.nombreYaExiste), Toast.LENGTH_SHORT).show();
             return;
         }
-        // Lista de jugadores completa
+        // Lista de jugadores está completa (máx 6 jugadores)
         else if(this.database.numeroJugadores() == 6){
             Toast.makeText(this, R.string.noMasJugadores, Toast.LENGTH_SHORT).show();
             return;
         }
         // Añadir un jugador nuevo
         else{
-            // Se añadirá como id del nuevo jugador el siguiente número al id del último jugador.
+            /* Se añadirá como id del nuevo jugador el siguiente número al id del último jugador.
+               Usar el autoincrement de la base de datos no es eficaz para la manera en la que quiero hacerlo */
             this.nombre.setText("");
             int id = this.database.idUltimoJugador()+1;
             this.database.insertarJugador(id, nickname);
@@ -116,6 +123,7 @@ public class AddPlayers extends AppCompatActivity implements PlayerListFragment.
         }else startActivity(intentPrePartida);
     }
 
+    // Método para actualizar los datos en el fragment horizontal
     private void actualizarDatos(){
         PlayerListFragment listFragment = (PlayerListFragment) getSupportFragmentManager().findFragmentById(R.id.listFragment);
         String[] datos = cargarElementos();

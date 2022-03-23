@@ -6,6 +6,7 @@ import androidx.core.app.NotificationCompat;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -15,7 +16,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +32,8 @@ import com.example.quiz.models.Turno;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+
+// Actividad en la que el jugador debe elegir la respuesta correcta para cada pregunta
 
 public class Partida extends AppCompatActivity {
 
@@ -61,11 +63,13 @@ public class Partida extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AuxiliarColores.elegirColor(this);
         idPregunta = 0;
+        /* Por si se da el caso de girar la pantalla, queremos guardar el identificador de la pregunta actual
+        con el objetivo de que se siga mostrando la misma pregunta y no una nueva. */
         if(savedInstanceState != null){
             idPregunta = savedInstanceState.getInt("idPregunta");
         }
         setContentView(R.layout.activity_partida);
-        // por ahora voy a usar solo el logo. En el futuro tal vez agregue una imagen a cada foto.
+        // por ahora voy a usar solo el logo. En el futuro tal vez agregue una imagen a cada pregunta.
         this.imagen = findViewById(R.id.imagenPartida);
         this.pregunta = findViewById(R.id.preguntaPartida);
         this.respuestas = findViewById(R.id.respuestasPartida);
@@ -92,7 +96,7 @@ public class Partida extends AppCompatActivity {
         }else{
             jugadorActual = 0;
         }
-        // Comprobar si quedan preguntas disponibles
+        // Comprobar si quedan preguntas disponibles. En caso de que no, poner todas como no leídas y empezar un nuevo ciclo.
         if(!this.database.hayPreguntasDisponibles()){
             this.database.marcarPreguntasComoNoLeidas();
         }
@@ -102,9 +106,9 @@ public class Partida extends AppCompatActivity {
 
         // Guardamos el id de la pregunta para por si rotamos el móvil, mantener la misma pregunta.
         idPregunta = turno.getId();
-        // En el futuro, intentaré que algunas preguntas contengan fotos. Eso supondrá cargar de la base de datos
-        // el nombre de la imagen. Si tiene alguna nombre para la foto, se carga esa foto en el icono. Si no tiene foto
-        // se carga la imagen default
+        /* En el futuro, intentaré que algunas preguntas contengan fotos. Eso supondrá cargar de la base de datos
+        el nombre de la imagen. Si tiene alguna nombre para la foto, se carga esa foto en el icono. Si no tiene foto
+        se carga la imagen default */
 
         this.imagen.setImageResource(R.drawable.quizimagen);
         this.botonLog.setText("Log");
@@ -139,11 +143,11 @@ public class Partida extends AppCompatActivity {
 
         respuestas.setOnItemClickListener((adapterView, view, i, l) -> {
             respuestaJugadorString = turno.getRespuestaString((int)l);
-            Log.d("queenel", respuestaJugadorString);
+            // En caso de acierto
             if(correcta == l){
                 acierto();
                 adapterView.getChildAt(i).setBackgroundColor(getResources().getColor(android.R.color.holo_green_dark));
-            }else{
+            }else{ // En caso de error
                 fallo();
                 adapterView.getChildAt(i).setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
             }
@@ -152,11 +156,14 @@ public class Partida extends AppCompatActivity {
         });
     }
 
-    private void acierto() { // Se ha respondido la pregunta correctamente
+    // Se ha respondido la pregunta correctamente
+    private void acierto() {
         Toast.makeText(this, R.string.acierto, Toast.LENGTH_SHORT).show();
         // Sumar un punto a la persona que ha acertado pasándole su identificador
         this.database.sumarPunto(jugadorActual);
     }
+
+    // Se ha respondido la pregunta erroneamente
     private void fallo() { // Se ha respondido la pregunta erroneamente
         Toast.makeText(this, R.string.fallo, Toast.LENGTH_SHORT).show();
     }
@@ -167,6 +174,8 @@ public class Partida extends AppCompatActivity {
         if(this.database.comprobarGanador()){
             lanzarNotificacion();
             Intent intentGanar = new Intent(this, Ranking.class);
+            // Le pasamos el id de la notificación también, por si llegamos por aquí también se quite la notificación
+            intentGanar.putExtra("id", 1);
             startActivity(intentGanar);
             finish();
         }else {
@@ -174,11 +183,12 @@ public class Partida extends AppCompatActivity {
             intentSeguir.putExtra("jugadorAnterior", jugadorActual);
             intentSeguir.putExtra("numeroTurno", numeroTurno);
             startActivity(intentSeguir);
-            //Al pasar de intent acabamos el activity actual
             finish();
         }
     }
 
+    /* En caso de que haya un ganador avisamos de que ya hay un ganador mediante una notificación local
+    y le damos la oportunidad de ir al ranking desde la propia notificación */
     private void lanzarNotificacion() {
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "IdCanal");
@@ -186,17 +196,17 @@ public class Partida extends AppCompatActivity {
             NotificationChannel canal = new NotificationChannel("IdCanal", "NombreCanal", NotificationManager.IMPORTANCE_DEFAULT);
             manager.createNotificationChannel(canal);
         }
-        //Intent intentNotificacion = new Intent(this, Ranking.class);
-        //intentNotificacion.putExtra("id",1);
-        //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intentNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intentNotificacion = new Intent(this, Ranking.class);
+        intentNotificacion.putExtra("id",1);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intentNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.quizimagen))
                 .setSmallIcon(android.R.drawable.star_on)
                 .setContentTitle("Ranking")
                 .setContentText("Ya tenemos un ganador!!")
                 .setVibrate(new long[]{0, 1000, 500, 1000})
-                .setAutoCancel(true);
-                //.addAction(android.R.drawable.ic_input_add,"Ver el Ranking", pendingIntent);
+                .setAutoCancel(true)
+                .addAction(android.R.drawable.ic_input_add,"Ver el Ranking", pendingIntent);
         manager.notify(1, builder.build());
     }
 
@@ -207,10 +217,13 @@ public class Partida extends AppCompatActivity {
         outState.putInt("idPregunta", idPregunta);
     }
 
+    // Método para ir guardando un registro de la partida en un fichero.
     private void registrarLog(String nombre){
         try{
             OutputStreamWriter fichero = new OutputStreamWriter(openFileOutput("log.txt", Context.MODE_APPEND));
-            fichero.write("Turno "+numeroTurno+".- Pregunta: "+turno.getPregunta().toUpperCase()+"; Jugador: "+nombre.toUpperCase()+"; Respuesta jugador: "+respuestaJugadorString.toUpperCase()+"; Respuesta correcta: "+respuestaCorrectaString.toUpperCase()+".\n");
+            fichero.write("Turno "+numeroTurno+".- Pregunta: "+turno.getPregunta().toUpperCase()+"; Jugador: "+nombre.toUpperCase()+
+                    "; Respuesta jugador: "+respuestaJugadorString.toUpperCase()+"; Respuesta correcta: "+respuestaCorrectaString.toUpperCase()+
+                    ".\n");
             fichero.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -219,11 +232,10 @@ public class Partida extends AppCompatActivity {
         }
     }
 
+
     public void onClickBotonLog(View view){
         Intent intentLog = new Intent(this, LogPartida.class);
         intentLog.putExtra("numeroTurnos", numeroTurno);
         startActivity(intentLog);
     }
-
-
 }

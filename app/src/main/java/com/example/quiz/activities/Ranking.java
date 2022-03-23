@@ -17,6 +17,8 @@ import com.example.quiz.adaptors.AdaptorListViewRanking;
 import com.example.quiz.database.MiDB;
 import com.example.quiz.models.AuxiliarColores;
 
+// Pantalla final del juego.
+
 public class Ranking extends AppCompatActivity {
 
     TextView titulo;
@@ -24,7 +26,6 @@ public class Ranking extends AppCompatActivity {
     ListView lista;
     Button boton;
     MiDB database;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

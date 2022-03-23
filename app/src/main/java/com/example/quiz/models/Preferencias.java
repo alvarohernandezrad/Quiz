@@ -12,6 +12,8 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.quiz.R;
 
+// Clase para gestionar las preferencias
+
 public class Preferencias extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override

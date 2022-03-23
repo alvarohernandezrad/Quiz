@@ -18,6 +18,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+// Actividad que se mostrará tras pulsar el botón LOG en la actividad de la partida y hace uso de ficheros
+
 public class LogPartida extends AppCompatActivity {
 
     ListView lista;
@@ -34,7 +36,6 @@ public class LogPartida extends AppCompatActivity {
         if(extras != null){
             numeroTurnos = extras.getInt("numeroTurnos")-1;
         }
-        Log.d("turnos", String.valueOf(numeroTurnos));
         this.lista = findViewById(R.id.listaLog);
         this.boton = findViewById(R.id.botonLog);
         this.boton.setText(R.string.seguirJugando);
@@ -43,6 +44,9 @@ public class LogPartida extends AppCompatActivity {
         this.lista.setAdapter(adapter);
         this.boton.setOnClickListener(view -> finish());
     }
+
+    /* Habrá un fichero llamado "log.txt" que guarda las respuestas dadas en cada turno de la partida, y mediante este
+    método leemos cada línea, y la guardamos en un array. El array serán los elementos que muestra el ListView. */
     private String[] leerLog() {
         String[] log = new String[numeroTurnos];
         try {

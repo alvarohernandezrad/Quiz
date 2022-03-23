@@ -2,6 +2,8 @@ package com.example.quiz.models;
 
 import java.util.ArrayList;
 
+// Objeto con la información necesaria por cada turno
+
 public class Turno {
     private int id;
     private String pregunta;

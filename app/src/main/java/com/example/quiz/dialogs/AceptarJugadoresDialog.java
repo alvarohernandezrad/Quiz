@@ -10,6 +10,8 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.quiz.R;
 
+// Dialog para aceptar si es la lista definitiva de jugadores
+
 public class AceptarJugadoresDialog extends DialogFragment {
     ListenerDelDialogo miListener;
 
