@@ -3,12 +3,14 @@ package com.example.quiz.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.preference.PreferenceManager;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
@@ -32,6 +34,7 @@ import com.example.quiz.models.Turno;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Locale;
 
 // Actividad en la que el jugador debe elegir la respuesta correcta para cada pregunta
 
@@ -89,8 +92,6 @@ public class Partida extends AppCompatActivity {
             jugadorAnterior = numeroJugadores;
             numeroTurno = 1;
         }
-        Log.d("idPre", String.valueOf(idPregunta));
-        // Ver a que jugador le toca. Si el anterior ha sido menor que el total +1. Si no 0 (índice empieza en 0)
         if(jugadorAnterior < numeroJugadores-1){ //añadimos el menos 1 porque el índice de los jugadores comieza en 0 y no en 1.
             jugadorActual = jugadorAnterior + 1;
         }else{
@@ -233,10 +234,10 @@ public class Partida extends AppCompatActivity {
         }
     }
 
-
     public void onClickBotonLog(View view){
         Intent intentLog = new Intent(this, LogPartida.class);
         intentLog.putExtra("numeroTurnos", numeroTurno);
         startActivity(intentLog);
     }
+
 }

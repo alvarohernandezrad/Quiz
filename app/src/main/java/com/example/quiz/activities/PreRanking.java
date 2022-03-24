@@ -1,14 +1,20 @@
 package com.example.quiz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.quiz.R;
 import com.example.quiz.models.AuxiliarColores;
+
+import java.util.Locale;
 
 // Actividad. Está actividad esta creada para que la notificación local que llega tenga sentido.
 

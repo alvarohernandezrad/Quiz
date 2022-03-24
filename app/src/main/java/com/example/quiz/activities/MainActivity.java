@@ -8,10 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     final private MiDB database = new MiDB(this, "App", (SQLiteDatabase.CursorFactory) null, 1);
 
-
+    private static String caca = "en";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         // Boton github (poder investigar el proyecto en github)
         Intent intentMulti = new Intent(this, AddPlayers.class);
         Intent intentPreferences = new Intent(this, PreferencesActivity.class);
-        Intent intentGithub = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/alvarohernandezrad"));
+        Intent intentGithub = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/alvarohernandezrad/Quiz"));
 
         botonMulti.setOnClickListener(view -> {
             database.limpiarTablaJugadores();
@@ -154,6 +155,4 @@ public class MainActivity extends AppCompatActivity {
         cargarPreferenciasColor();
         cargarPreferenciasIdioma();
     }
-
-
 }
