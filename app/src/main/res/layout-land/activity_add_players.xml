@@ -74,8 +74,8 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/listFragment"
         android:name="com.example.quiz.fragments.PlayerListFragment"
-        android:layout_width="199dp"
-        android:layout_height="285dp"
+        android:layout_width="213dp"
+        android:layout_height="316dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.686"
@@ -85,11 +85,11 @@
 
     <TextView
         android:id="@+id/textoLista"
-        android:layout_width="249dp"
-        android:layout_height="52dp"
+        android:layout_width="260dp"
+        android:layout_height="41dp"
         android:layout_marginTop="4dp"
-        android:text="TextView"
         android:gravity="center"
+        android:text="TextView"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

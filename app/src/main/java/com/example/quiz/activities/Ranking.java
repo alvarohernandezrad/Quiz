@@ -42,9 +42,9 @@ public class Ranking extends AppCompatActivity {
         // Recogemos el id que nos ha pasado la anterior actividad, y borramos la notificación
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
-            int id = extras.getInt("id");
+            int idNotificacion = extras.getInt("idNotificacion");
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            manager.cancel(id);
+            manager.cancel(idNotificacion);
         }
 
         this.titulo.setText(R.string.tituloRanking);

@@ -150,6 +150,7 @@ public class Partida extends AppCompatActivity {
             }else{ // En caso de error
                 fallo();
                 adapterView.getChildAt(i).setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
+                adapterView.getChildAt(correcta).setBackgroundColor(getResources().getColor(android.R.color.holo_green_dark));
             }
             registrarLog(nombreJugadorActual);
             pasarDeIntent();
@@ -173,9 +174,9 @@ public class Partida extends AppCompatActivity {
         // Puede ser que ya haya un ganador, o que todavía haya que seguir jugando
         if(this.database.comprobarGanador()){
             lanzarNotificacion();
-            Intent intentGanar = new Intent(this, Ranking.class);
+            Intent intentGanar = new Intent(this, PreRanking.class);
             // Le pasamos el id de la notificación también, por si llegamos por aquí también se quite la notificación
-            intentGanar.putExtra("id", 1);
+            intentGanar.putExtra("idNotificacion", 1);
             startActivity(intentGanar);
             finish();
         }else {
@@ -197,13 +198,13 @@ public class Partida extends AppCompatActivity {
             manager.createNotificationChannel(canal);
         }
         Intent intentNotificacion = new Intent(this, Ranking.class);
-        intentNotificacion.putExtra("id",1);
+        intentNotificacion.putExtra("idNotificacion",1);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intentNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.quizimagen))
                 .setSmallIcon(android.R.drawable.star_on)
                 .setContentTitle("Ranking")
-                .setContentText("Ya tenemos un ganador!!")
+                .setContentText("¡¡Ya tenemos un ganador!! / There is a winner!!")
                 .setVibrate(new long[]{0, 1000, 500, 1000})
                 .setAutoCancel(true)
                 .addAction(android.R.drawable.ic_input_add,"Ver el Ranking", pendingIntent);
