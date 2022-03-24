@@ -11,7 +11,7 @@
         android:layout_height="85dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintHorizontal_bias="0.033"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/turnoPartida"
         app:layout_constraintVertical_bias="0.045"
@@ -33,15 +33,15 @@
 
     <ListView
         android:id="@+id/respuestasPartida"
-        android:layout_width="365dp"
-        android:layout_height="198dp"
+        android:layout_width="369dp"
+        android:layout_height="186dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/preguntaPartida"
-        android:layout_width="398dp"
-        android:layout_height="152dp"
+        android:layout_width="432dp"
+        android:layout_height="139dp"
         android:layout_marginStart="116dp"
         android:layout_marginTop="4dp"
         android:gravity="center"
@@ -54,8 +54,8 @@
 
     <ListView
         android:id="@+id/listaJugadoresPuntosPartida"
-        android:layout_width="350dp"
-        android:layout_height="124dp"
+        android:layout_width="303dp"
+        android:layout_height="123dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/respuestasPartida"
         app:layout_constraintHorizontal_bias="0.0"
@@ -65,7 +65,7 @@
 
     <TextView
         android:id="@+id/cabeceraJugador"
-        android:layout_width="176dp"
+        android:layout_width="128dp"
         android:layout_height="31dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/listaJugadoresPuntosPartida"
@@ -82,10 +82,10 @@
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/listaJugadoresPuntosPartida"
         app:layout_constraintEnd_toStartOf="@+id/respuestasPartida"
-        app:layout_constraintHorizontal_bias="0.638"
+        app:layout_constraintHorizontal_bias="0.413"
         app:layout_constraintStart_toEndOf="@+id/cabeceraJugador"
         app:layout_constraintTop_toBottomOf="@+id/imagenPartida"
-        app:layout_constraintVertical_bias="0.463" />
+        app:layout_constraintVertical_bias="0.468" />
 
     <Button
         android:id="@+id/botonLogPartida"
