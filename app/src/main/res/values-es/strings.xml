@@ -30,4 +30,15 @@
     <string name="color">Color Favorito</string>
     <string name="siSeguro">Sí, estoy seguro</string>
     <string name="proyecto">Ver en GitHub</string>
+    <string name="jugarOnline">Jugar Online</string>
+    <string name="invalidPassword">Contaseña incorrecta</string>
+    <string name="jugadorNoExisteInvalidPassword">No existe ningún jugador con ese nombre o la contraseña es incorrecta</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="registrar">¿No tienes cuenta? Registrate aquí</string>
+    <string name="ningunCampoVacio">No puede haber ningún campo vacío</string>
+    <string name="iniciarSesion">Iniciar sesión</string>
+    <string name="paginaRegistro">Regístrate</string>
+    <string name="requisitosContraseña">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="usuarioYaExiste">Ese nombre de usuario ya está escogido. Elige otro</string>
+    <string name="usuarioAñadidoConExito">Usuario añadido con éxito</string>
 </resources>

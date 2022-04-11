@@ -10,18 +10,24 @@
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout-land/activity_partida.xml" value="0.2" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout-land/activity_pre_partida.xml" value="0.16" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout-land/activity_pre_ranking.xml" value="0.14947089947089948" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout-land/activity_preferences.xml" value="0.18121693121693122" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout-land/activity_ranking.xml" value="0.16" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout-land/main_activity.xml" value="0.775" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout-land/ranking.xml" value="0.1" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout-w936dp/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_add_players.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_log.xml" value="0.12" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_login.xml" value="0.18645833333333334" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_login_register.xml" value="0.25" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_online_menu.xml" value="0.1" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_partida.xml" value="0.1511627906976744" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_pre_partida.xml" value="0.2" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_pre_ranking.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_preferences.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_preferencias.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_ranking.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_registro.xml" value="0.264" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/activity_simson.xml" value="0.12604166666666666" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/fila.xml" value="0.264" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/Quiz/app/src/main/res/layout/fila_simson.xml" value="0.12604166666666666" />

@@ -1,25 +1,22 @@
 package com.example.quiz.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.preference.PreferenceManager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.PreferenceManager;
 
 import com.example.quiz.R;
 import com.example.quiz.database.MiDB;
 import com.example.quiz.models.AuxiliarColores;
-
 
 import java.util.Locale;
 
@@ -57,10 +54,12 @@ public class MainActivity extends AppCompatActivity {
         Button botonMulti = findViewById(R.id.botonMultijugador);
         Button botonPreferencias = findViewById(R.id.botonPreferencias);
         Button botonGithub = findViewById(R.id.botonGithub);
+        Button botonOnline = findViewById(R.id.botonOnline);
         // Establecer texto en los botones
         botonMulti.setText(R.string.multijugador);
         botonPreferencias.setText(R.string.preferencias);
         botonGithub.setText(R.string.proyecto);
+        botonOnline.setText(R.string.jugarOnline);
 
         // Settear la imagen de inicio desde drawable
         imagen.setImageResource(R.drawable.quizimagen);
@@ -72,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intentMulti = new Intent(this, AddPlayers.class);
         Intent intentPreferences = new Intent(this, PreferencesActivity.class);
         Intent intentGithub = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/alvarohernandezrad/Quiz"));
+        Intent intentOnline = new Intent(this, LoginRegisterActivity.class);
+
 
         botonMulti.setOnClickListener(view -> {
             database.limpiarTablaJugadores();
@@ -81,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
         botonPreferencias.setOnClickListener(view -> startActivity(intentPreferences));
 
         botonGithub.setOnClickListener(view -> startActivity(intentGithub));
+
+        botonOnline.setOnClickListener(view -> startActivity(intentOnline));
     }
 
     // Método para establecer el modo oscuro o no, dependiendo de lo que elija el jugador
