@@ -1,7 +1,11 @@
 package com.example.quiz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
+import androidx.work.Constraints;
 import androidx.work.Data;
+import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
@@ -11,6 +15,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.ImageDecoder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,10 +41,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class OnlineMenuActivity extends AppCompatActivity {
     static String username;
-    ImageView imagenUsuario;
     Button botonFoto, botonGaleria;
+    CircleImageView imagenCircular;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +57,10 @@ public class OnlineMenuActivity extends AppCompatActivity {
         if(extras != null){
             username = extras.getString("user");
         }
-        imagenUsuario = findViewById(R.id.imagenUsuario);
+
         botonFoto = findViewById(R.id.botonFoto);
         botonGaleria = findViewById(R.id.botonGaleria);
+        imagenCircular = findViewById(R.id.imagenCircular);
 
         cargarImagenUsuarioBaseDatos(username);
 
@@ -105,8 +114,15 @@ public class OnlineMenuActivity extends AppCompatActivity {
         }catch (IOException e){
             e.printStackTrace();
         }
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+        }else{
+            Toast.makeText(this, getString(R.string.noInternet), Toast.LENGTH_SHORT).show();
+        }
         Data datos = new Data.Builder().putString("username", username).build();
-        OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ImagenUsuarioInsertarBDWebService.class).setInputData(datos).build();
+        Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+        OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ImagenUsuarioInsertarBDWebService.class).setInputData(datos).setConstraints(restricciones).build();
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
             if(status != null && status.getState().isFinished()) {
                 if(status.getOutputData().getBoolean("OK", false)){
@@ -121,8 +137,15 @@ public class OnlineMenuActivity extends AppCompatActivity {
 
 
     private void cargarImagenUsuarioBaseDatos(String username) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+        }else{
+            Toast.makeText(this, getString(R.string.noInternet), Toast.LENGTH_SHORT).show();
+        }
         Data datos = new Data.Builder().putString("username",username).build();
-        OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ImagenesUsuarioWebService.class).setInputData(datos).build();
+        Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+        OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ImagenesUsuarioWebService.class).setInputData(datos).setConstraints(restricciones).build();
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
             if(status != null && status.getState().isFinished()) {
                 if(status.getOutputData().getBoolean("escrito", false)){
@@ -149,7 +172,7 @@ public class OnlineMenuActivity extends AppCompatActivity {
                     }
                     byte[] decodedString = Base64.decode(imagen, Base64.DEFAULT);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                    imagenUsuario.setImageBitmap(decodedByte);
+                    imagenCircular.setImageBitmap(decodedByte);
                 }
             }
         });

@@ -41,4 +41,5 @@
     <string name="requisitosContraseña">Password must have at least 6 characters</string>
     <string name="usuarioYaExiste">That username is already chosen. choose another</string>
     <string name="usuarioAñadidoConExito">User added successfully</string>
+    <string name="noInternet">There is no Internet conection</string>
 </resources>

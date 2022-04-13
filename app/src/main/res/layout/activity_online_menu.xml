@@ -7,16 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.OnlineMenuActivity">
 
-    <ImageView
-        android:id="@+id/imagenUsuario"
-        android:layout_width="237dp"
-        android:layout_height="243dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <Button
         android:id="@+id/botonFoto"
         android:layout_width="wrap_content"
@@ -26,19 +16,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.249"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagenUsuario"
-        app:layout_constraintVertical_bias="0.479" />
+        app:layout_constraintTop_toBottomOf="@+id/imagenCircular" />
 
     <Button
         android:id="@+id/botonGaleria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.725"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagenUsuario"
-        app:layout_constraintVertical_bias="0.019" />
+        app:layout_constraintTop_toBottomOf="@+id/imagenCircular" />
+
+    <!-- Circular Image View  -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imagenCircular"
+        android:layout_width="214dp"
+        android:layout_height="198dp"
+        android:layout_centerInParent="true"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.322" />
 </androidx.constraintlayout.widget.ConstraintLayout>

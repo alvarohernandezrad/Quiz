@@ -41,4 +41,5 @@
     <string name="requisitosContraseña">La contraseña debe tener al menos 6 caracteres</string>
     <string name="usuarioYaExiste">Ese nombre de usuario ya está escogido. Elige otro</string>
     <string name="usuarioAñadidoConExito">Usuario añadido con éxito</string>
+    <string name="noInternet">No hay conexión a internet</string>
 </resources>

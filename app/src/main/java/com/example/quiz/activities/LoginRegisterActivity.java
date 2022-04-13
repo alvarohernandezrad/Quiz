@@ -1,8 +1,12 @@
 package com.example.quiz.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.Constraints;
 import androidx.work.Data;
+import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
@@ -84,8 +90,16 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
 
     private void jugadorExiste(String username, String password) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+        }else{
+            Toast.makeText(this, getString(R.string.noInternet), Toast.LENGTH_SHORT).show();
+        }
+
         Data datos = new Data.Builder().putString("usuario", username).putString("password", password).build();
-        OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ComprobarUsuarioWebService.class).setInputData(datos).build();
+        Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+        OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ComprobarUsuarioWebService.class).setInputData(datos).setConstraints(restricciones).build();
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
             if(status != null && status.getState().isFinished()) {
                 existeUsuario = status.getOutputData().getBoolean("existe", false);

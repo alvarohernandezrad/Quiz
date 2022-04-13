@@ -1,7 +1,9 @@
 package com.example.quiz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.Constraints;
 import androidx.work.Data;
+import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
@@ -95,7 +97,8 @@ public class Registro extends AppCompatActivity {
 
     private void registrar(String username, String password) {
         Data datos = new Data.Builder().putString("usuario", username).putString("password", password).build();
-        OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(AñadirNuevoUsuarioWebService.class).setInputData(datos).build();
+        Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+        OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(AñadirNuevoUsuarioWebService.class).setInputData(datos).setConstraints(restricciones).build();
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
             if(status != null && status.getState().isFinished()) {
                 Boolean okey = status.getOutputData().getBoolean("OK", false);
