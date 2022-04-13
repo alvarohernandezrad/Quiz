@@ -98,6 +98,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 }
                 else{
                     Intent intentOnline = new Intent(this, OnlineMenuActivity.class);
+                    intentOnline.putExtra("user", username);
                     startActivity(intentOnline);
                     finish();
                 }

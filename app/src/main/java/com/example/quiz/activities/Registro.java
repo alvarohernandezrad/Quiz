@@ -100,8 +100,9 @@ public class Registro extends AppCompatActivity {
             if(status != null && status.getState().isFinished()) {
                 Boolean okey = status.getOutputData().getBoolean("OK", false);
                 if(okey){
-                    //Toast.makeText(this, getString(R.string.usuarioAñadidoConExito), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.usuarioAñadidoConExito), Toast.LENGTH_SHORT).show();
                     Intent intentMenuOnline = new Intent(this, OnlineMenuActivity.class);
+                    intentMenuOnline.putExtra("user", username);
                     setResult(RESULT_OK, intentMenuOnline);
                     startActivity(intentMenuOnline);
                     finish();
