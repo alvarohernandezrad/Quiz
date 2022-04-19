@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
+import android.net.InetAddresses;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -17,6 +21,11 @@ import androidx.preference.PreferenceManager;
 import com.example.quiz.R;
 import com.example.quiz.database.MiDB;
 import com.example.quiz.models.AuxiliarColores;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 import java.util.Locale;
 
@@ -72,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intentPreferences = new Intent(this, PreferencesActivity.class);
         Intent intentGithub = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/alvarohernandezrad/Quiz"));
         Intent intentOnline = new Intent(this, LoginRegisterActivity.class);
+        Intent intentOnlineCredenciales = new Intent(this, OnlineMenuActivity.class);
 
 
         botonMulti.setOnClickListener(view -> {
@@ -83,7 +93,23 @@ public class MainActivity extends AppCompatActivity {
 
         botonGithub.setOnClickListener(view -> startActivity(intentGithub));
 
-        botonOnline.setOnClickListener(view -> startActivity(intentOnline));
+        botonOnline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+                String user = preferences.getString("username","");
+                if(user.length() > 0){
+                    intentOnlineCredenciales.putExtra("user", user);
+                    startActivity(intentOnlineCredenciales);
+                }
+                else{
+                    startActivity(intentOnline);
+                }
+            }
+        });
+
+        //botonOnline.setOnClickListener(view -> startActivity(intentOnline));
+
     }
 
     // Método para establecer el modo oscuro o no, dependiendo de lo que elija el jugador

@@ -2,6 +2,7 @@ package com.example.quiz.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -24,6 +25,9 @@ import androidx.work.WorkManager;
 import com.example.quiz.R;
 import com.example.quiz.conexionesBDWebServices.ComprobarUsuarioWebService;
 import com.example.quiz.models.AuxiliarColores;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.concurrent.ExecutionException;
 
@@ -34,6 +38,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
     ImageView imagen;
     Button botonLogin;
     static boolean existeUsuario;
+    static String token;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -59,6 +64,12 @@ public class LoginRegisterActivity extends AppCompatActivity {
         registro.setText(R.string.registrar);
         warning.setVisibility(View.INVISIBLE);
         botonLogin.setText(R.string.iniciarSesion);
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                token = instanceIdResult.getToken();
+            }
+        });
 
     }
 
@@ -96,8 +107,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, getString(R.string.noInternet), Toast.LENGTH_SHORT).show();
         }
-
-        Data datos = new Data.Builder().putString("usuario", username).putString("password", password).build();
+        Data datos = new Data.Builder().putString("usuario", username).putString("password", password).putString("token", token).build();
         Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
         OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ComprobarUsuarioWebService.class).setInputData(datos).setConstraints(restricciones).build();
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
@@ -111,6 +121,10 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     return;
                 }
                 else{
+                    SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("username", username);
+                    editor.commit();
                     Intent intentOnline = new Intent(this, OnlineMenuActivity.class);
                     intentOnline.putExtra("user", username);
                     startActivity(intentOnline);

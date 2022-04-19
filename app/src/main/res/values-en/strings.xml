@@ -32,7 +32,7 @@
     <string name="proyecto">View on GitHub</string>
     <string name="jugarOnline">Play Online</string>
     <string name="invalidPassword">Invalid password</string>
-    <string name="jugadorNoExisteInvalidPassword">There is no player with that name or the password is invalid</string>
+    <string name="jugadorNoExisteInvalidPassword">There is no player with that name or  the password is wrong</string>
     <string name="contraseña">Password</string>
     <string name="registrar">You do not have an account? Sign up here</string>
     <string name="ningunCampoVacio">There can be no empty field</string>

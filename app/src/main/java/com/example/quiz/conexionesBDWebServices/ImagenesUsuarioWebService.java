@@ -57,13 +57,17 @@ public class ImagenesUsuarioWebService extends Worker {
                 BufferedInputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader bufferedReader = new BufferedReader (new InputStreamReader(inputStream, "UTF-8"));
                 result = bufferedReader.readLine();
-                try{
-                    OutputStreamWriter fichero = new OutputStreamWriter(getApplicationContext().openFileOutput("ficheroAyudaImagenRecoger.txt", Context.MODE_PRIVATE));
-                    fichero.write(result);
-                    fichero.close();
+                if(result != null) {
+                    try {
+                        OutputStreamWriter fichero = new OutputStreamWriter(getApplicationContext().openFileOutput("ficheroAyudaImagenRecoger.txt", Context.MODE_PRIVATE));
+                        fichero.write(result);
+                        fichero.close();
+                        datos = new Data.Builder().putBoolean("escrito", true).build();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
                     datos = new Data.Builder().putBoolean("escrito", true).build();
-                }catch (IOException e){
-                    e.printStackTrace();
                 }
                 return Result.success(datos);
             }

@@ -21,6 +21,10 @@ import com.example.quiz.R;
 import com.example.quiz.conexionesBDWebServices.AñadirNuevoUsuarioWebService;
 import com.example.quiz.conexionesBDWebServices.ComprobarExisteYaUsuarioWebService;
 import com.example.quiz.models.AuxiliarColores;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.concurrent.ExecutionException;
 
@@ -31,6 +35,7 @@ public class Registro extends AppCompatActivity {
     ImageView imagen;
     Button botonRegistro;
     static boolean existeUsuario;
+    static String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +101,14 @@ public class Registro extends AppCompatActivity {
     }
 
     private void registrar(String username, String password) {
-        Data datos = new Data.Builder().putString("usuario", username).putString("password", password).build();
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                token = instanceIdResult.getToken();
+            }
+        });
+
+        Data datos = new Data.Builder().putString("usuario", username).putString("password", password).putString("token", token).build();
         Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
         OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(AñadirNuevoUsuarioWebService.class).setInputData(datos).setConstraints(restricciones).build();
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {

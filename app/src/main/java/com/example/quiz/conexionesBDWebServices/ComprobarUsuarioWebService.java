@@ -31,6 +31,7 @@ public class ComprobarUsuarioWebService extends Worker {
         HttpURLConnection urlConnection = null;
         String usuario = getInputData().getString("usuario");
         String password = getInputData().getString("password");
+        String token = getInputData().getString("token");
         try {
             URL destino = new URL(direccion);
             urlConnection = (HttpURLConnection) destino.openConnection();
@@ -38,7 +39,8 @@ public class ComprobarUsuarioWebService extends Worker {
             urlConnection.setReadTimeout(5000);
             Uri.Builder builder = new Uri.Builder()
                     .appendQueryParameter("usuario", usuario)
-                    .appendQueryParameter("password", password);
+                    .appendQueryParameter("password", password)
+                    .appendQueryParameter("token", token);
             String parametros = builder.build().getEncodedQuery();
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);

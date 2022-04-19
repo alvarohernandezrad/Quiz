@@ -18,6 +18,7 @@ import java.util.Locale;
 
 public class PreferencesActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.quiz">
+
     <uses-feature
         android:name="android.hardware.camera2.full"
         android:required="true" />
@@ -18,6 +19,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Quiz"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".activities.PartidaOnline"
+            android:exported="false" />
+
+        <service
+            android:name=".services.ServicioFirebase"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".activities.Registro"
             android:exported="false" />

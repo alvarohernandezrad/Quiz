@@ -1,8 +1,11 @@
 package com.example.quiz.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
@@ -23,15 +26,18 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.quiz.R;
 import com.example.quiz.conexionesBDWebServices.ImagenUsuarioInsertarBDWebService;
 import com.example.quiz.conexionesBDWebServices.ImagenesUsuarioWebService;
 import com.example.quiz.models.AuxiliarColores;
+import com.google.android.material.navigation.NavigationView;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -47,6 +53,8 @@ public class OnlineMenuActivity extends AppCompatActivity {
     static String username;
     Button botonFoto, botonGaleria;
     CircleImageView imagenCircular;
+    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +65,26 @@ public class OnlineMenuActivity extends AppCompatActivity {
         if(extras != null){
             username = extras.getString("user");
         }
+        // Asignar la ToolBar como ActionBar
+        setSupportActionBar(findViewById(R.id.toolbar));
 
+        final DrawerLayout elmenudesplegable = findViewById(R.id.drawer_layout);
+        NavigationView elnavigation = findViewById(R.id.elnavigationview);
+        elnavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.microfono:
+                        break;
+                    case R.id.localizacion:
+                        break;
+                }
+                elmenudesplegable.closeDrawers();
+                return false;
+            }
+        });
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         botonFoto = findViewById(R.id.botonFoto);
         botonGaleria = findViewById(R.id.botonGaleria);
         imagenCircular = findViewById(R.id.imagenCircular);
@@ -73,8 +100,30 @@ public class OnlineMenuActivity extends AppCompatActivity {
             Intent intentGaleria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intentGaleria, 200);
         });
+
+
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final DrawerLayout elmenudesplegable = findViewById(R.id.drawer_layout);
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                elmenudesplegable.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        final DrawerLayout elmenudesplegable = findViewById(R.id.drawer_layout);
+        if (elmenudesplegable.isDrawerOpen(GravityCompat.START)) {
+            elmenudesplegable.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
