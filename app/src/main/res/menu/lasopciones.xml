@@ -2,20 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-    <item android:title="Primer menú">
+    <item android:title="Imagen de perfil">
         <menu>
             <item
-                android:id="@+id/microfono"
-                android:icon="@android:drawable/ic_btn_speak_now"
-                android:title="Micrófono" />
+                android:id="@+id/galeria"
+                android:icon="@android:drawable/ic_menu_gallery"
+                android:title="@string/galeria" />
+            <item
+                android:id="@+id/camara"
+                android:icon="@android:drawable/ic_menu_camera"
+                android:title="@string/camara"/>
         </menu>
     </item>
     <item
-        android:id="@+id/escribir"
-        android:icon="@android:drawable/ic_dialog_email"
-        android:title="Enviar email" />
-    <item
-        android:id="@+id/localizacion"
-        android:icon="@android:drawable/ic_dialog_map"
-        android:title="Localización" />
+        android:id="@+id/cerrarSesion"
+        android:icon="@android:drawable/ic_delete"
+        android:title="@string/cerrarSesion" />
 </menu>

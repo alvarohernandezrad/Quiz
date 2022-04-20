@@ -2,8 +2,6 @@ package com.example.quiz.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.work.Constraints;
@@ -14,28 +12,28 @@ import androidx.work.WorkManager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.ImageDecoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.quiz.R;
 import com.example.quiz.conexionesBDWebServices.ImagenUsuarioInsertarBDWebService;
 import com.example.quiz.conexionesBDWebServices.ImagenesUsuarioWebService;
+import com.example.quiz.conexionesBDWebServices.VidasJugadorBDWebService;
 import com.example.quiz.models.AuxiliarColores;
 import com.google.android.material.navigation.NavigationView;
 
@@ -51,9 +49,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class OnlineMenuActivity extends AppCompatActivity {
     static String username;
-    Button botonFoto, botonGaleria;
-    CircleImageView imagenCircular;
+    CircleImageView imagenMenu;
     Toolbar toolbar;
+    TextView textoMenu, textoAlerta;
+    Button botonHistorico, botonPartida;
 
 
     @Override
@@ -65,6 +64,19 @@ public class OnlineMenuActivity extends AppCompatActivity {
         if(extras != null){
             username = extras.getString("user");
         }
+
+        botonHistorico = findViewById(R.id.botonHistorico);
+        botonPartida = findViewById(R.id.botonPartidaOnline);
+        textoAlerta = findViewById(R.id.textoAlerta);
+        textoAlerta.setVisibility(View.INVISIBLE);
+
+        botonPartida.setText(getString(R.string.jugar));
+        botonHistorico.setText(getString(R.string.rankingHistorico));
+
+
+
+        botonPartida.setOnClickListener(view -> calcularVidasJugador(username));
+
         // Asignar la ToolBar como ActionBar
         setSupportActionBar(findViewById(R.id.toolbar));
 
@@ -74,10 +86,20 @@ public class OnlineMenuActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.microfono:
+                    case R.id.galeria:
+                        Intent intentGaleria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intentGaleria, 200);
                         break;
-                    case R.id.localizacion:
+                    case R.id.camara:
+                        Intent intentFotoCamara = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intentFotoCamara, 100);
                         break;
+                    case R.id.cerrarSesion:
+                        SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("username", "");
+                        editor.commit();
+                        finish();
                 }
                 elmenudesplegable.closeDrawers();
                 return false;
@@ -85,23 +107,39 @@ public class OnlineMenuActivity extends AppCompatActivity {
         });
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        botonFoto = findViewById(R.id.botonFoto);
-        botonGaleria = findViewById(R.id.botonGaleria);
-        imagenCircular = findViewById(R.id.imagenCircular);
-
         cargarImagenUsuarioBaseDatos(username);
 
-        botonFoto.setOnClickListener(view -> {
-            Intent intentFotoCamara = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intentFotoCamara, 100);
+    }
+
+    private void calcularVidasJugador(String username) {
+        int vidas = 0;
+        Data datos = new Data.Builder().putString("username", username).build();
+        Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+        OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(VidasJugadorBDWebService.class).setInputData(datos).setConstraints(restricciones).build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
+            if(status != null && status.getState().isFinished()) {
+                if(status.getOutputData().getBoolean("vida", false)){
+                    Intent intentPatida = new Intent(this, PartidaOnline.class);
+                    intentPatida.putExtra("username", username);
+                    intentPatida.putExtra("numPregunta", 1);
+                    intentPatida.putExtra("puntos", 0);
+                    startActivity(intentPatida);
+                    finish();
+                }
+                else{
+                    textoAlerta = findViewById(R.id.textoAlerta);
+                    textoAlerta.setVisibility(View.VISIBLE);
+                    textoAlerta.setText(getString(R.string.sinVidas));
+                }
+            }
         });
+        WorkManager.getInstance(this).enqueue(req);
+    }
 
-        botonGaleria.setOnClickListener(view -> {
-            Intent intentGaleria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intentGaleria, 200);
-        });
-
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.lasopciones, menu);
+        return true;
     }
 
     @Override
@@ -110,6 +148,8 @@ public class OnlineMenuActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case android.R.id.home:
                 elmenudesplegable.openDrawer(GravityCompat.START);
+                textoMenu = findViewById(R.id.textoMenu);
+                textoMenu.setText(username);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -221,7 +261,9 @@ public class OnlineMenuActivity extends AppCompatActivity {
                     }
                     byte[] decodedString = Base64.decode(imagen, Base64.DEFAULT);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                    imagenCircular.setImageBitmap(decodedByte);
+                    imagenMenu = findViewById(R.id.imagenMenu);
+                    imagenMenu.setImageBitmap(decodedByte);
+
                 }
             }
         });

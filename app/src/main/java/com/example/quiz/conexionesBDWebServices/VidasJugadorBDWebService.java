@@ -18,29 +18,24 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ComprobarUsuarioWebService extends Worker {
-
-    public ComprobarUsuarioWebService(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+public class VidasJugadorBDWebService extends Worker {
+    public VidasJugadorBDWebService(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
     }
 
     @NonNull
     @Override
     public Result doWork() {
-        String direccion = "http://ec2-18-132-60-229.eu-west-2.compute.amazonaws.com/ahernandez141/WEB/comprobarUsuario.php";
+        String username = getInputData().getString("username");
+        String direccion = "http://ec2-18-132-60-229.eu-west-2.compute.amazonaws.com/ahernandez141/WEB/vidasJugador.php";
         HttpURLConnection urlConnection = null;
-        String usuario = getInputData().getString("usuario");
-        String password = getInputData().getString("password");
-        String token = getInputData().getString("token");
         try {
             URL destino = new URL(direccion);
             urlConnection = (HttpURLConnection) destino.openConnection();
             urlConnection.setConnectTimeout(5000);
             urlConnection.setReadTimeout(5000);
             Uri.Builder builder = new Uri.Builder()
-                    .appendQueryParameter("usuario", usuario)
-                    .appendQueryParameter("password", password)
-                    .appendQueryParameter("token", token);
+                    .appendQueryParameter("usuario", username);
             String parametros = builder.build().getEncodedQuery();
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);
@@ -48,7 +43,7 @@ public class ComprobarUsuarioWebService extends Worker {
             PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
             out.print(parametros);
             out.close();
-        } catch (MalformedURLException e) {
+        }catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,11 +62,11 @@ public class ComprobarUsuarioWebService extends Worker {
         Data datos = null;
         if(result.equals("1")){
             datos = new Data.Builder()
-                    .putBoolean("existe", true)
+                    .putBoolean("vida", true)
                     .build();
         }else{
             datos = new Data.Builder()
-                    .putBoolean("existe", false)
+                    .putBoolean("noVida", false)
                     .build();
         }
         return Result.success(datos);

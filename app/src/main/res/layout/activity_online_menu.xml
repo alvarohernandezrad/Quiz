@@ -73,42 +73,54 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/botonFoto"
+        <ImageView
+            android:id="@+id/imagenOnline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.249"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imagenCircular" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/quizimagen" />
 
         <Button
-            android:id="@+id/botonGaleria"
+            android:id="@+id/botonPartidaOnline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imagenOnline"
+            app:layout_constraintVertical_bias="0.468" />
+
+        <Button
+            android:id="@+id/botonHistorico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="80dp"
             android:text="Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.725"
+            app:layout_constraintTop_toBottomOf="@+id/imagenOnline"
+            app:layout_constraintVertical_bias="0.468" />
+
+        <TextView
+            android:id="@+id/textoAlerta"
+            android:layout_width="239dp"
+            android:layout_height="73dp"
+            android:text="TextView"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:textColor="@android:color/holo_red_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imagenCircular" />
+            app:layout_constraintTop_toBottomOf="@+id/imagenOnline"
+            app:layout_constraintVertical_bias="0.856" />
 
         <!-- Circular Image View  -->
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imagenCircular"
-            android:layout_width="214dp"
-            android:layout_height="198dp"
-            android:layout_centerInParent="true"
-            app:civ_border_color="#FF000000"
-            app:civ_border_width="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.322" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

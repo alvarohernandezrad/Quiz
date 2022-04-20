@@ -42,4 +42,10 @@
     <string name="usuarioYaExiste">Ese nombre de usuario ya está escogido. Elige otro</string>
     <string name="usuarioAñadidoConExito">Usuario añadido con éxito</string>
     <string name="noInternet">No hay conexión a internet</string>
+    <string name="cerrarSesion">Cerrar sesión</string>
+    <string name="galeria">Seleccionar de la galeria</string>
+    <string name="camara">Sacar foto</string>
+    <string name="sinVidas">No te quedan vidas. Ya has jugado en la última hora</string>
+    <string name="pregunta">Pregunta</string>
+    <string name="rankingHistorico">Ver Ranking Histórico</string>
 </resources>

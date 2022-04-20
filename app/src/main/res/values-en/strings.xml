@@ -42,4 +42,10 @@
     <string name="usuarioYaExiste">That username is already chosen. choose another</string>
     <string name="usuarioAñadidoConExito">User added successfully</string>
     <string name="noInternet">There is no Internet conection</string>
+    <string name="cerrarSesion">Log out</string>
+    <string name="galeria">Select from gallery</string>
+    <string name="camara">Take a picture</string>
+    <string name="sinVidas">You have no lives left. You have already played in the last hour</string>
+    <string name="pregunta">Question</string>
+    <string name="rankingHistorico">See Historical Ranking</string>
 </resources>
