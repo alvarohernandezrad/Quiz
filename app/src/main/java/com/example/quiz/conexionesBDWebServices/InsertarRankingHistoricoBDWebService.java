@@ -8,36 +8,44 @@ import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.example.quiz.activities.Registro;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class AñadirNuevoUsuarioWebService extends Worker {
-    public AñadirNuevoUsuarioWebService(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+public class InsertarRankingHistoricoBDWebService extends Worker {
+    public InsertarRankingHistoricoBDWebService(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
     }
 
     @NonNull
     @Override
     public Result doWork() {
-        String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/ahernandez141/WEB/registrarUsuarioNuevo.php";
+        String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/ahernandez141/WEB/insertarRanking.php";
         HttpURLConnection urlConnection = null;
-        String usuario = getInputData().getString("usuario");
-        String password = getInputData().getString("password");
-        String token = getInputData().getString("token");
+        String username = getInputData().getString("username");
+        int puntos = getInputData().getInt("puntos", 0);
+        double longitud = getInputData().getDouble("longitud", 0);
+        double latitud = getInputData().getDouble("latitud", 0);
+        // Flag para saber si el usuario quiere ofrecer la localizacion o no
+        int flagLocalizacion;
+        if(longitud == 0.0 && latitud == 0.0){
+            flagLocalizacion = 0;
+        }else{
+            flagLocalizacion = 1;
+        }
         try {
             URL destino = new URL(direccion);
             urlConnection = (HttpURLConnection) destino.openConnection();
             urlConnection.setConnectTimeout(5000);
             urlConnection.setReadTimeout(5000);
             Uri.Builder builder = new Uri.Builder()
-                    .appendQueryParameter("usuario", usuario)
-                    .appendQueryParameter("password", password)
-                    .appendQueryParameter("token", token);
+                    .appendQueryParameter("username", username)
+                    .appendQueryParameter("puntos", String.valueOf(puntos))
+                    .appendQueryParameter("longitud", String.valueOf(longitud))
+                    .appendQueryParameter("latitud", String.valueOf(latitud))
+                    .appendQueryParameter("flag", String.valueOf(flagLocalizacion));
             String parametros = builder.build().getEncodedQuery();
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);

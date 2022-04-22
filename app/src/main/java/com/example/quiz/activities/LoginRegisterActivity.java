@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,11 +24,8 @@ import androidx.work.WorkManager;
 import com.example.quiz.R;
 import com.example.quiz.conexionesBDWebServices.ComprobarUsuarioWebService;
 import com.example.quiz.models.AuxiliarColores;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
-import java.util.concurrent.ExecutionException;
 
 public class LoginRegisterActivity extends AppCompatActivity {
 
@@ -64,19 +60,13 @@ public class LoginRegisterActivity extends AppCompatActivity {
         registro.setText(R.string.registrar);
         warning.setVisibility(View.INVISIBLE);
         botonLogin.setText(R.string.iniciarSesion);
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                token = instanceIdResult.getToken();
-            }
-        });
-
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> token = instanceIdResult.getToken());
     }
 
 
 
     // Método para gestionar click en login
-    public void onLogin(View v) throws InterruptedException, ExecutionException {
+    public void onLogin(View v) {
         String username = this.user.getText().toString();
         String password = this.password.getText().toString();
         // Uso de Toast para evitar un nombre repetido, un nombre vacío, o un nombre genérico.
@@ -107,6 +97,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, getString(R.string.noInternet), Toast.LENGTH_SHORT).show();
         }
+        // Pasamos los datos al worker para que haga el registro
         Data datos = new Data.Builder().putString("usuario", username).putString("password", password).putString("token", token).build();
         Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
         OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ComprobarUsuarioWebService.class).setInputData(datos).setConstraints(restricciones).build();

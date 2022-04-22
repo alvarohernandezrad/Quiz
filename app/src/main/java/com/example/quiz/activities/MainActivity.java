@@ -1,8 +1,12 @@
 package com.example.quiz.activities;
 
+import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
@@ -16,17 +20,21 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
 
 import com.example.quiz.R;
 import com.example.quiz.database.MiDB;
 import com.example.quiz.models.AuxiliarColores;
+import com.example.quiz.services.AlarmReceiver;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 // Actividad principal, con la que se inicia la aplicación
@@ -70,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         botonGithub.setText(R.string.proyecto);
         botonOnline.setText(R.string.jugarOnline);
 
+
         // Settear la imagen de inicio desde drawable
         imagen.setImageResource(R.drawable.quizimagen);
 
@@ -82,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intentGithub = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/alvarohernandezrad/Quiz"));
         Intent intentOnline = new Intent(this, LoginRegisterActivity.class);
         Intent intentOnlineCredenciales = new Intent(this, OnlineMenuActivity.class);
-
 
         botonMulti.setOnClickListener(view -> {
             database.limpiarTablaJugadores();
@@ -107,8 +115,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //botonOnline.setOnClickListener(view -> startActivity(intentOnline));
 
     }
 
@@ -184,4 +190,5 @@ public class MainActivity extends AppCompatActivity {
         cargarPreferenciasColor();
         cargarPreferenciasIdioma();
     }
+
 }

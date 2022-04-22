@@ -2,6 +2,7 @@ package com.example.quiz.conexionesBDWebServices;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.work.Data;
@@ -27,7 +28,7 @@ public class ImagenesUsuarioWebService extends Worker {
     @Override
     public Result doWork() {
         String username = getInputData().getString("username");
-        String direccion = "http://ec2-18-132-60-229.eu-west-2.compute.amazonaws.com/ahernandez141/WEB/extraerImagenUsuario.php";
+        String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/ahernandez141/WEB/extraerImagenUsuario.php";
         HttpURLConnection urlConnection = null;
         try {
             URL destino = new URL(direccion);

@@ -45,7 +45,18 @@
     <string name="cerrarSesion">Log out</string>
     <string name="galeria">Select from gallery</string>
     <string name="camara">Take a picture</string>
-    <string name="sinVidas">You have no lives left. You have already played in the last hour</string>
+    <string name="sinVidas">You have no lives left. You have already played in the last 5 minutes. Wait</string>
     <string name="pregunta">Question</string>
     <string name="rankingHistorico">See Historical Ranking</string>
+    <string name="meDaIgual">I do not care</string>
+    <string name="darPermisos">Give permissions</string>
+    <string name="permisosLocalizacion">Location permissions</string>
+    <string name="registrarLocalizacion">It is important that you allow us to use location permissions if you want to record where you have played each game from. So we can know where the best players are from!</string>
+    <string name="sinLocalizacion">Wow, we can\'t seem to find you. At the end of the game, we will not be able to record where you played from.</string>
+    <string name="verLocalizacion">See location</string>
+    <string name="verMapa">The map will open with the position in which the game was played</string>
+    <string name="sinLocalizacion2">Oops, it seems that the location could not be registered</string>
+    <string name="volver">Back</string>
+    <string name="puntos">Score</string>
+    <string name="localizacion">Location</string>
 </resources>

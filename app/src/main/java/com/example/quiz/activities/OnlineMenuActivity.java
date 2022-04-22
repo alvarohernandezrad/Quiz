@@ -77,6 +77,14 @@ public class OnlineMenuActivity extends AppCompatActivity {
 
         botonPartida.setOnClickListener(view -> calcularVidasJugador(username));
 
+        Intent intentRanking = new Intent(this, RankingHistorico.class);
+        botonHistorico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intentRanking);
+            }
+        });
+
         // Asignar la ToolBar como ActionBar
         setSupportActionBar(findViewById(R.id.toolbar));
 
@@ -136,11 +144,11 @@ public class OnlineMenuActivity extends AppCompatActivity {
         WorkManager.getInstance(this).enqueue(req);
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.lasopciones, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -186,9 +194,11 @@ public class OnlineMenuActivity extends AppCompatActivity {
             // Abrir la imagen como bitmap
             Bitmap foto = BitmapFactory.decodeStream(pictureInputStream);
             subirImagenBD(username, foto);
+            cargarImagenUsuarioBaseDatos(username);
         }
     }
 
+    // Sube la foto a la base de datos MySQL
     private void subirImagenBD(String username, Bitmap foto){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         foto.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -224,7 +234,7 @@ public class OnlineMenuActivity extends AppCompatActivity {
         WorkManager.getInstance(this).enqueue(req);
     }
 
-
+    // Carga la imagen de la base de datos en el CircleImageView
     private void cargarImagenUsuarioBaseDatos(String username) {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();

@@ -27,7 +27,7 @@ public class VidasJugadorBDWebService extends Worker {
     @Override
     public Result doWork() {
         String username = getInputData().getString("username");
-        String direccion = "http://ec2-18-132-60-229.eu-west-2.compute.amazonaws.com/ahernandez141/WEB/vidasJugador.php";
+        String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/ahernandez141/WEB/vidasJugador.php";
         HttpURLConnection urlConnection = null;
         try {
             URL destino = new URL(direccion);

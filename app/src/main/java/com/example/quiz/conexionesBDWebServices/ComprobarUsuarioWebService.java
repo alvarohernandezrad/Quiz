@@ -27,7 +27,7 @@ public class ComprobarUsuarioWebService extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        String direccion = "http://ec2-18-132-60-229.eu-west-2.compute.amazonaws.com/ahernandez141/WEB/comprobarUsuario.php";
+        String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/ahernandez141/WEB/comprobarUsuario.php";
         HttpURLConnection urlConnection = null;
         String usuario = getInputData().getString("usuario");
         String password = getInputData().getString("password");

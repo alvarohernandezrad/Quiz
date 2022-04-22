@@ -2,12 +2,8 @@ package com.example.quiz.activities;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -24,7 +20,6 @@ import com.example.quiz.fragments.PlayerListFragment;
 import com.example.quiz.models.AuxiliarColores;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 // Actividad en la que se añadirán los jugadores que juegan la partida
 

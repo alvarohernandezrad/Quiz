@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">Quiz</string>
     <string name="multijugador">Multijugador</string>
     <string name="preferencias">Preferencias</string>
-    <string name="nombre">Nombre del jugador</string>
+    <string name="nombre">Jugador</string>
     <string name="jugar">Jugar</string>
     <string name="añadir">Añadir jugador</string>
     <string name="textoAñadir">Añade entre 2 y 6 jugadores</string>
@@ -44,7 +44,18 @@
     <string name="cerrarSesion">Cerrar sesión</string>
     <string name="galeria">Seleccionar de la galeria</string>
     <string name="camara">Sacar foto</string>
-    <string name="sinVidas">No te quedan vidas. Ya has jugado en la última hora</string>
+    <string name="sinVidas">No te quedan vidas. Ya has jugado en los últimos 5 minutos. Espera.</string>
     <string name="pregunta">Pregunta</string>
     <string name="rankingHistorico">Ver Ranking Histórico</string>
+    <string name="meDaIgual">Me da igual</string>
+    <string name="darPermisos">Dar permisos</string>
+    <string name="permisosLocalizacion">Permisos de localización</string>
+    <string name="registrarLocalizacion">Es importante que nos permita usar los permisos de localización si quiere registrar desde donde ha jugado cada partida. ¡Así podremos saber de donde son los mejores jugadores!</string>
+    <string name="sinLocalizacion">Vaya, parace que no podemos encontrarte. Al final de la partida, no podremos registrar desde donde has jugado.</string>
+    <string name="verLocalizacion">Ver localización</string>
+    <string name="verMapa">Se abrirá el mapa con la posición en la que se jugó la partida</string>
+    <string name="sinLocalizacion2">Vaya, parece que no se pudo registrar la localización</string>
+    <string name="volver">Volver</string>
+    <string name="puntos">Puntuación</string>
+    <string name="localizacion">Localización</string>
 </resources>
