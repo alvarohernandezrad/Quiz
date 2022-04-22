@@ -45,7 +45,7 @@
     <string name="cerrarSesion">Cerrar sesión</string>
     <string name="galeria">Seleccionar de la galeria</string>
     <string name="camara">Sacar foto</string>
-    <string name="sinVidas">No te quedan vidas. Ya has jugado en los últimos 5 minutos. Espera.</string>
+    <string name="sinVidas">No te quedan vidas. Ya has jugado en el último minutos. Espera.</string>
     <string name="pregunta">Pregunta</string>
     <string name="rankingHistorico">Ver Ranking Histórico</string>
     <string name="meDaIgual">Me da igual</string>

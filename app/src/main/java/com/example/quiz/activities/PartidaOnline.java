@@ -165,15 +165,15 @@ public class PartidaOnline extends AppCompatActivity {
                 adapterView.getChildAt(i).setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
                 adapterView.getChildAt(correcta).setBackgroundColor(getResources().getColor(android.R.color.holo_green_dark));
 
-                // Uso de alarma para avisar de que tenemos una nueva vida y sumarla 5 minutos después de perder
+                // Uso de alarma para avisar de que tenemos una nueva vida y sumarla 1 minuto después de perder
                 Calendar calendario = Calendar.getInstance();
                 calendario.set(Calendar.HOUR_OF_DAY, calendario.get(Calendar.HOUR_OF_DAY));
-                calendario.set(Calendar.MINUTE, calendario.get(Calendar.MINUTE)+5);
+                calendario.set(Calendar.MINUTE, calendario.get(Calendar.MINUTE)+1);
                 calendario.set(Calendar.SECOND, calendario.get(Calendar.SECOND));
 
                 // Creamos el intent
                 Intent intentAlarma = new Intent(this, AlarmReceiver.class);
-                intentAlarma.putExtra("username",username);
+                intentAlarma.putExtra("username", username);
                 PendingIntent pendingIntentAlarma = PendingIntent.getBroadcast(this,9999,intentAlarma, PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager gestor = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 gestor.setExact(AlarmManager.RTC_WAKEUP,calendario.getTimeInMillis(),pendingIntentAlarma);
