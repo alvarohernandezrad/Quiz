@@ -7,9 +7,12 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -101,13 +104,7 @@ public class Registro extends AppCompatActivity {
     }
 
     private void registrar(String username, String password) {
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                token = instanceIdResult.getToken();
-            }
-        });
-
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> token = instanceIdResult.getToken());
         Data datos = new Data.Builder().putString("usuario", username).putString("password", password).putString("token", token).build();
         Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
         OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(AñadirNuevoUsuarioWebService.class).setInputData(datos).setConstraints(restricciones).build();
@@ -115,11 +112,11 @@ public class Registro extends AppCompatActivity {
             if(status != null && status.getState().isFinished()) {
                 Boolean okey = status.getOutputData().getBoolean("OK", false);
                 if(okey){
-                    Toast.makeText(this, getString(R.string.usuarioAñadidoConExito), Toast.LENGTH_SHORT).show();
-                    Intent intentMenuOnline = new Intent(this, OnlineMenuActivity.class);
+                    /*Intent intentMenuOnline = new Intent(this, OnlineMenuActivity.class);
                     intentMenuOnline.putExtra("user", username);
                     setResult(RESULT_OK, intentMenuOnline);
-                    startActivity(intentMenuOnline);
+                    startActivity(intentMenuOnline);*/
+                    Toast.makeText(this, getString(R.string.registradoIniciaSesion), Toast.LENGTH_LONG).show();
                     finish();
                 }
 

@@ -110,12 +110,12 @@
 
         <TextView
             android:id="@+id/textoAlerta"
-            android:layout_width="239dp"
-            android:layout_height="73dp"
-            android:text="TextView"
+            android:layout_width="424dp"
+            android:layout_height="69dp"
             android:gravity="center"
-            android:textSize="16dp"
+            android:text="TextView"
             android:textColor="@android:color/holo_red_light"
+            android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

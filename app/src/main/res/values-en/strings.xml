@@ -59,4 +59,5 @@
     <string name="volver">Back</string>
     <string name="puntos">Score</string>
     <string name="localizacion">Location</string>
+    <string name="registradoIniciaSesion">Registered successfully. Log in</string>
 </resources>
