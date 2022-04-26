@@ -24,8 +24,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Quiz"
         android:usesCleartextTraffic="true">
-
-
+        <activity
+            android:name=".activities.GoogleMapsActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.RankingHistorico"
             android:exported="false" />
@@ -81,6 +82,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCZFt65Pd-6cbhiJNMvVebpPxcJDBHnBSg" />
 
         <receiver
             android:name=".services.AlarmReceiver"

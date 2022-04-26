@@ -40,8 +40,10 @@ public class RankingHistorico extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AuxiliarColores.elegirColor(this);
         setContentView(R.layout.activity_ranking_historico);
-        Button boton = findViewById(R.id.botonVolverRankingOnline);
-        boton.setText(getString(R.string.volver));
+        Button botonVolver = findViewById(R.id.botonVolverRankingOnline);
+        botonVolver.setText(getString(R.string.volver));
+        Button botonMapa = findViewById(R.id.botonGoogleMaps);
+        botonMapa.setText(getString(R.string.verEnMapa));
         TextView titulo, username, puntuacion, localizacion;
         titulo = findViewById(R.id.tituloRankingOnline);
         username = findViewById(R.id.textoNombreRankingOnline);
@@ -51,10 +53,14 @@ public class RankingHistorico extends AppCompatActivity {
         titulo.setText(getString(R.string.rankingHistorico));
         puntuacion.setText(getString(R.string.puntos));
         localizacion.setText(getString(R.string.localizacion));
-        boton.setOnClickListener(view -> {
+        botonVolver.setOnClickListener(view -> {
             Intent intentMenu = new Intent(this, OnlineMenuActivity.class);
             startActivity(intentMenu);
             finish();
+        });
+        botonMapa.setOnClickListener(view -> {
+            Intent intentMapa = new Intent(this, GoogleMapsActivity.class);
+            startActivity(intentMapa);
         });
 
         // Obtenemos los datos para cada una de las filas del ListView personalizado

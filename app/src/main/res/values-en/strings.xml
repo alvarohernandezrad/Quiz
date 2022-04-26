@@ -60,4 +60,6 @@
     <string name="puntos">Score</string>
     <string name="localizacion">Location</string>
     <string name="registradoIniciaSesion">Registered successfully. Log in</string>
+    <string name="verEnMapa">See map</string>
+    <string name="puntosMinuscula">points</string>
 </resources>

@@ -60,4 +60,6 @@
     <string name="puntos">Puntuación</string>
     <string name="localizacion">Localización</string>
     <string name="registradoIniciaSesion">Registrado correctamente. Inicia sesión</string>
+    <string name="verEnMapa">Ver mapa</string>
+    <string name="puntosMinuscula">puntos</string>
 </resources>
