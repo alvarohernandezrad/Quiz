@@ -165,10 +165,10 @@ public class PartidaOnline extends AppCompatActivity {
                 adapterView.getChildAt(i).setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
                 adapterView.getChildAt(correcta).setBackgroundColor(getResources().getColor(android.R.color.holo_green_dark));
 
-                // Uso de alarma para avisar de que tenemos una nueva vida y sumarla 1 minuto después de perder
+                // Uso de alarma para avisar de que tenemos una nueva vida y sumarla 5 minutos después de perder
                 Calendar calendario = Calendar.getInstance();
                 calendario.set(Calendar.HOUR_OF_DAY, calendario.get(Calendar.HOUR_OF_DAY));
-                calendario.set(Calendar.MINUTE, calendario.get(Calendar.MINUTE)+1);
+                calendario.set(Calendar.MINUTE, calendario.get(Calendar.MINUTE)+5);
                 calendario.set(Calendar.SECOND, calendario.get(Calendar.SECOND));
 
                 // Creamos el intent

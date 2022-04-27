@@ -45,7 +45,7 @@
     <string name="cerrarSesion">Log out</string>
     <string name="galeria">Select from gallery</string>
     <string name="camara">Take a picture</string>
-    <string name="sinVidas">You have no lives left. You have already played in the last minute. Wait</string>
+    <string name="sinVidas">You have no lives left. You have already played in the last 5 minutes. Wait</string>
     <string name="pregunta">Question</string>
     <string name="rankingHistorico">See Historical Ranking</string>
     <string name="meDaIgual">I do not care</string>
