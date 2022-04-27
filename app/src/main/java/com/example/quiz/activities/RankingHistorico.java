@@ -3,7 +3,6 @@ package com.example.quiz.activities;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.work.Constraints;
-import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -11,25 +10,13 @@ import androidx.work.WorkManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.quiz.R;
-import com.example.quiz.adaptors.AdaptorListViewBotonEliminar;
-import com.example.quiz.adaptors.AdaptorListViewRanking;
 import com.example.quiz.adaptors.AdaptorListViewRankingOnline;
-import com.example.quiz.conexionesBDWebServices.InsertarRankingHistoricoBDWebService;
 import com.example.quiz.conexionesBDWebServices.LograrDatosRankingBDWebService;
-import com.example.quiz.conexionesBDWebServices.VidasJugadorBDWebService;
 import com.example.quiz.models.AuxiliarColores;
 
 public class RankingHistorico extends AppCompatActivity {

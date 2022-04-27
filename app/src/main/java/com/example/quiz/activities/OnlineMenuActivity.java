@@ -1,6 +1,6 @@
 package com.example.quiz.activities;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -21,14 +21,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.quiz.R;
 import com.example.quiz.conexionesBDWebServices.ImagenUsuarioInsertarBDWebService;
@@ -50,7 +47,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class OnlineMenuActivity extends AppCompatActivity {
     static String username;
     CircleImageView imagenMenu;
-    Toolbar toolbar;
     TextView textoMenu, textoAlerta;
     Button botonHistorico, botonPartida;
 
@@ -78,40 +74,32 @@ public class OnlineMenuActivity extends AppCompatActivity {
         botonPartida.setOnClickListener(view -> calcularVidasJugador(username));
 
         Intent intentRanking = new Intent(this, RankingHistorico.class);
-        botonHistorico.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(intentRanking);
-            }
-        });
+        botonHistorico.setOnClickListener(view -> startActivity(intentRanking));
 
         // Asignar la ToolBar como ActionBar
         setSupportActionBar(findViewById(R.id.toolbar));
 
         final DrawerLayout elmenudesplegable = findViewById(R.id.drawer_layout);
         NavigationView elnavigation = findViewById(R.id.elnavigationview);
-        elnavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.galeria:
-                        Intent intentGaleria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(intentGaleria, 200);
-                        break;
-                    case R.id.camara:
-                        Intent intentFotoCamara = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intentFotoCamara, 100);
-                        break;
-                    case R.id.cerrarSesion:
-                        SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("username", "");
-                        editor.commit();
-                        finish();
-                }
-                elmenudesplegable.closeDrawers();
-                return false;
+        elnavigation.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.galeria:
+                    Intent intentGaleria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intentGaleria, 200);
+                    break;
+                case R.id.camara:
+                    Intent intentFotoCamara = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intentFotoCamara, 100);
+                    break;
+                case R.id.cerrarSesion:
+                    SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("username", "");
+                    editor.commit();
+                    finish();
             }
+            elmenudesplegable.closeDrawers();
+            return false;
         });
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -120,7 +108,6 @@ public class OnlineMenuActivity extends AppCompatActivity {
     }
 
     private void calcularVidasJugador(String username) {
-        int vidas = 0;
         Data datos = new Data.Builder().putString("username", username).build();
         Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
         OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(VidasJugadorBDWebService.class).setInputData(datos).setConstraints(restricciones).build();
@@ -144,11 +131,6 @@ public class OnlineMenuActivity extends AppCompatActivity {
         WorkManager.getInstance(this).enqueue(req);
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.lasopciones, menu);
-        return true;
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -269,10 +251,15 @@ public class OnlineMenuActivity extends AppCompatActivity {
                     }catch (IOException e){
                         e.printStackTrace();
                     }
-                    byte[] decodedString = Base64.decode(imagen, Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                    imagenMenu = findViewById(R.id.imagenMenu);
-                    imagenMenu.setImageBitmap(decodedByte);
+                    if(!"".equals(imagen)) {
+                        byte[] decodedString = Base64.decode(imagen, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        imagenMenu = findViewById(R.id.imagenMenu);
+                        imagenMenu.setImageBitmap(decodedByte);
+                    }else{
+                        imagenMenu = findViewById(R.id.imagenMenu);
+                        imagenMenu.setImageDrawable(getResources().getDrawable(R.drawable.carafeliz));
+                    }
 
                 }
             }

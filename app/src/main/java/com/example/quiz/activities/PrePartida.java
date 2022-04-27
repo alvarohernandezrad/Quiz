@@ -2,12 +2,9 @@ package com.example.quiz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.preference.PreferenceManager;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +23,6 @@ import com.example.quiz.models.AuxiliarColores;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Locale;
 
 // Actividad justo anterior al comienzo de la partida. Última oportunidad para decidir la lista definitiva de jugadores
 

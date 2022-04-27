@@ -1,28 +1,21 @@
 package com.example.quiz.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.widget.ListView;
 
 import com.example.quiz.R;
-import com.example.quiz.adaptors.AdaptorListViewRankingOnline;
 import com.example.quiz.conexionesBDWebServices.LograrDatosRankingBDWebService;
 import com.example.quiz.models.AuxiliarColores;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCallback {
